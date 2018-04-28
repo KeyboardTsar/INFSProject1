@@ -10,23 +10,23 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eventable.pkgfor.students.SignUp3Controller">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eventable.pkgfor.students.SignUp3Controller">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
             <ImageView fitHeight="1007.0" fitWidth="1504.0" layoutX="191.0" layoutY="385.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Downloads/iStock-459002655.jpg" />
+                  <Image url="@iStock-459002655.jpg" />
                </image>
             </ImageView>
             <ImageView fitHeight="83.0" fitWidth="79.0" layoutX="801.0" layoutY="502.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Downloads/Eventable%20logo.png" />
+                  <Image url="@Eventable%20logo.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="83.0" fitWidth="278.0" layoutX="719.0" layoutY="424.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Downloads/EventAble%20logo%20v2.png" />
+                  <Image url="@EventAble%20logo%20v2.png" />
                </image>
             </ImageView>
             <Button fx:id="next" contentDisplay="CENTER" graphicTextGap="100.0" layoutX="801.0" layoutY="862.0" mnemonicParsing="false" onAction="#nextButton" opacity="0.0" prefHeight="36.0" prefWidth="79.0" style="-fx-border-color: WHITE; -fx-text-fill: WHITE; -fx-background-color: BLACK; -fx-opacity: 0.5;" text="NEXT" textAlignment="CENTER">

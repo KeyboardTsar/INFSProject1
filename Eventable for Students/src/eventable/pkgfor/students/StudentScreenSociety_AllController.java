@@ -5,43 +5,43 @@
  */
 package eventable.pkgfor.students;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-
 import javafx.stage.Stage;
 
 /**
+ * FXML Controller class
  *
- * @author edhopkins
+ * @author AriSurfacePro
  */
-public class SignUp4Controller implements Initializable {
-     
+public class StudentScreenSociety_AllController implements Initializable {
+
     @FXML
     Stage stage;
     Parent root;
-
-    @FXML
-    private Button next;
     
-//    @FXML 
+    @FXML
+    private Text society;
+    @FXML
+    private Text code;
+    @FXML
+    private Text events;
+    @FXML
+    private Text feedback;
+    @FXML
+    private Text profile;
+    
+    //    @FXML 
 //    private ImageView home;
 //    
 //    @FXML
@@ -57,20 +57,39 @@ public class SignUp4Controller implements Initializable {
 //
 //    DBController d = new DBController(); //Establish a connection to the db
 
-    
+
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        
-        
-    } 
-    
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
+
     @FXML
-    private void nextButton(ActionEvent event) throws Exception{
-        loadNext("StudentScreenEvents_All.fxml"); 
+    private void bottomNavSocietyButton(MouseEvent event) {
+        loadNext("StudentScreenSociety_All.fxml");
+    }
+
+    @FXML
+    private void bottomNavCodeButton(MouseEvent event) {
+        loadNext("StudentScreenCode.fxml");
+    }
+
+    @FXML
+    private void bottomNavEventsButton(MouseEvent event) {
+        loadNext("StudentScreenEvents_All.fxml");
+    }
+
+    @FXML
+    private void bottomNavFeedbackButton(MouseEvent event) {
+        loadNext("StudentScreenFeedback_Feedback.fxml");
+    }
+
+    @FXML
+    private void bottomNavProfileButton(MouseEvent event) {
+        loadNext("StudentScreenProfile.fxml");
     }
     
     public void loadNext(String destination){
-        stage=(Stage) next.getScene().getWindow();
+        stage=(Stage) society.getScene().getWindow();
         try {
             root = FXMLLoader.load(getClass().getResource(destination)); //putting it to 'Seek a Ride' for now, before we know what type of user each person is
         } catch (IOException ex) {
@@ -122,4 +141,5 @@ public class SignUp4Controller implements Initializable {
 //    public static String getUser(){
 //        return loggedInUser;
 //    } 
+    
 }
