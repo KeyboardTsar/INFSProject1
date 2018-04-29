@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  *
  * @author AriSurfacePro
  */
-public class StudentScreenSociety_AllController implements Initializable {
+public class StudentScreenSociety_FavouritesController implements Initializable {
 
     @FXML
     Stage stage;

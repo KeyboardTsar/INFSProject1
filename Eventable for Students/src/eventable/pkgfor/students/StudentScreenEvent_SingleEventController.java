@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -24,7 +25,7 @@ import javafx.stage.Stage;
  *
  * @author AriSurfacePro
  */
-public class StudentScreenSociety_AllController implements Initializable {
+public class StudentScreenEvent_SingleEventController implements Initializable {
 
     @FXML
     Stage stage;
@@ -40,7 +41,13 @@ public class StudentScreenSociety_AllController implements Initializable {
     private Text feedback;
     @FXML
     private Text profile;
-    
+    @FXML
+    private Text eventTopNav;
+    @FXML
+    private Text other;
+    @FXML
+    private Button backButton;
+
     //    @FXML 
 //    private ImageView home;
 //    
@@ -56,8 +63,7 @@ public class StudentScreenSociety_AllController implements Initializable {
 //    public static String loggedInUser;
 //
 //    DBController d = new DBController(); //Establish a connection to the db
-
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -87,15 +93,20 @@ public class StudentScreenSociety_AllController implements Initializable {
     private void bottomNavProfileButton(MouseEvent event) {
         loadNext("StudentScreenProfile.fxml");
     }
-    
+
     @FXML
-    private void topNavAll(MouseEvent event) {
-        loadNext("StudentScreenSociety_All.fxml");
+    private void topNavEvent(MouseEvent event) {
+        loadNext("StudentScreenEvent_SingleEvent.fxml");
     }
 
     @FXML
-    private void topNavFavourites(MouseEvent event) {
-        loadNext("StudentScreenSociety_Favourites.fxml");
+    private void topNavOther(MouseEvent event) {
+        loadNext("StudentScreenEvent_SingleEvent_Other.fxml");
+    }
+
+    @FXML
+    private void topNavBackButton(MouseEvent event) {
+        loadNext("StudentScreenEvents_All.fxml");
     }
     
     public void loadNext(String destination){
@@ -110,7 +121,7 @@ public class StudentScreenSociety_AllController implements Initializable {
         stage.show();
     }
     
-//    @FXML
+    //    @FXML
 //    private void SignInButton(ActionEvent event) throws Exception{
 //        DBController auth = new DBController();
 //        SignInError.setVisible(false);

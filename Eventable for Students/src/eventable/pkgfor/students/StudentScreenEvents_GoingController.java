@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  *
  * @author AriSurfacePro
  */
-public class StudentScreenSociety_AllController implements Initializable {
+public class StudentScreenEvents_GoingController implements Initializable {
 
     @FXML
     Stage stage;
@@ -40,8 +40,16 @@ public class StudentScreenSociety_AllController implements Initializable {
     private Text feedback;
     @FXML
     private Text profile;
-    
-    //    @FXML 
+    @FXML
+    private Text all;
+    @FXML
+    private Text favourites;
+    @FXML
+    private Text going;
+    @FXML
+    private Text past;
+
+//    @FXML 
 //    private ImageView home;
 //    
 //    @FXML
@@ -56,8 +64,7 @@ public class StudentScreenSociety_AllController implements Initializable {
 //    public static String loggedInUser;
 //
 //    DBController d = new DBController(); //Establish a connection to the db
-
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -87,15 +94,25 @@ public class StudentScreenSociety_AllController implements Initializable {
     private void bottomNavProfileButton(MouseEvent event) {
         loadNext("StudentScreenProfile.fxml");
     }
-    
+
     @FXML
     private void topNavAll(MouseEvent event) {
-        loadNext("StudentScreenSociety_All.fxml");
+        loadNext("StudentScreenEvents_All.fxml");
     }
 
     @FXML
     private void topNavFavourites(MouseEvent event) {
-        loadNext("StudentScreenSociety_Favourites.fxml");
+        loadNext("StudentScreenEvents_Favourites.fxml");
+    }
+
+    @FXML
+    private void topNavGoing(MouseEvent event) {
+        loadNext("StudentScreenEvents_Going.fxml");
+    }
+
+    @FXML
+    private void topNavPast(MouseEvent event) {
+        loadNext("StudentScreenEvents_Past.fxml");
     }
     
     public void loadNext(String destination){
@@ -110,7 +127,7 @@ public class StudentScreenSociety_AllController implements Initializable {
         stage.show();
     }
     
-//    @FXML
+    //    @FXML
 //    private void SignInButton(ActionEvent event) throws Exception{
 //        DBController auth = new DBController();
 //        SignInError.setVisible(false);
