@@ -17,12 +17,13 @@ public class DBController {
     protected String currentQuery;
     
     
-    //Paul added this in - used to open the connection to the database
+    //Used to open connection to the database
     public static void openConnection() {
         if (conn == null) {
             try {
-                conn = DriverManager.getConnection("jdbc:h2:./INFS2605 Assi");
-                java.sql.Statement st = conn.createStatement();
+                conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","hr","oraclhre");
+                Statement st=con.createStatement();  
+                //java.sql.Statement st = conn.createStatement();
                 
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -91,7 +92,7 @@ public class DBController {
             //currentQuery = "SELECT STAFFID FROM STAFF WHERE USERNAME = '" + username + "' AND PASSWORD = '" + password + "'";
         //}
         //else{
-        currentQuery = "SELECT USERID FROM USER WHERE USERNAME = '" + username + "' AND PASSWORD = '" + password + "'";
+        currentQuery = "SELECT EMAIL FROM APP_USER WHERE EMAIL = '" + username + "' AND PASSWORD = '" + password + "'";
         //}
         openConnection();
         try {
@@ -143,6 +144,9 @@ public class DBController {
         try {
             statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(currentQuery);
+            ColumnValue = ResultSet.getString(rs);
+            System.out.print(ColumnValue);
+            
             if (rs.next()){ 
                 conn.commit();
                 return rs.getString("ANSWER");
