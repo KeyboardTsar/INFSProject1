@@ -31,7 +31,7 @@ public class StudentScreenProfileController implements Initializable {
     @FXML
     Stage stage;
     Parent root;
-    
+
     @FXML
     private Text society;
     @FXML
@@ -69,7 +69,7 @@ public class StudentScreenProfileController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @FXML
     private void bottomNavSocietyButton(MouseEvent event) {
@@ -98,14 +98,39 @@ public class StudentScreenProfileController implements Initializable {
 
     @FXML
     private void enableEditAccount(MouseEvent event) {
+        if (!firstName.isEditable()) {
+            firstName.setEditable(true);
+            lastName.setEditable(true);
+            email.setEditable(true);
+            password.setEditable(true);
+            zID.setEditable(true);
+            mobile.setEditable(true);
+            degree.setEditable(true);
+            gradYear.setEditable(true);
+            editAccountButton.setText("Save");
+        } 
+        else {
+            //TODO: Save modified profile information to DB
+
+            //Set TextFields back to read-only and change button text
+            firstName.setEditable(false);
+            lastName.setEditable(false);
+            email.setEditable(false);
+            password.setEditable(false);
+            zID.setEditable(false);
+            mobile.setEditable(false);
+            degree.setEditable(false);
+            gradYear.setEditable(false);
+            editAccountButton.setText("Edit Account");
+        } 
     }
 
     @FXML
     private void deleteAccount(MouseEvent event) {
     }
-    
-    public void loadNext(String destination){
-        stage=(Stage) society.getScene().getWindow();
+
+    public void loadNext(String destination) {
+        stage = (Stage) society.getScene().getWindow();
         try {
             root = FXMLLoader.load(getClass().getResource(destination)); //putting it to 'Seek a Ride' for now, before we know what type of user each person is
         } catch (IOException ex) {
@@ -115,7 +140,7 @@ public class StudentScreenProfileController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    
+
 //    @FXML
 //    private void SignInButton(ActionEvent event) throws Exception{
 //        DBController auth = new DBController();
@@ -157,5 +182,4 @@ public class StudentScreenProfileController implements Initializable {
 //    public static String getUser(){
 //        return loggedInUser;
 //    } 
-    
 }
