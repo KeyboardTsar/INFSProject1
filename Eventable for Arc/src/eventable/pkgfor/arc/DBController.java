@@ -1,6 +1,6 @@
-
 package eventable.pkgfor.arc;
 
+import oracle.jdbc.OracleDriver;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -15,41 +15,28 @@ public class DBController {
     //protected ResultSet rs;
     //protected ResultSetMetaData rsmd;
     protected String currentQuery;
-    
-    
+      
     //Used to open connection to the database
     public static void openConnection() {
         if (conn == null) {
             try {
-                conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","hr","oraclhre");
-                Statement st=con.createStatement();  
-                //java.sql.Statement st = conn.createStatement();
-                
+                Class.forName("oracle.jdbc.driver.OracleDriver");
+                conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","hr","hr");
+                Statement st=con.createStatement();
+                ResultSet rs=st.executeQuery("SELECT first_name FROM app_user");
+                while(rs.next()) {
+                    System.out.println(rs.getString(1));
+                }
+                conn.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
-                
             }
         }
     }
-    
-    //Ed's old constructor method
-    /*public DBController(){
-        //Connect to DB
-        try {
-            Class.forName("org.h2.Driver");
-            conn = DriverManager.getConnection("jdbc:h2:./INFS2605 Assi");
-            java.sql.Statement st = conn.createStatement();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(INFS2605Assignment.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(INFS2605Assignment.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }*/
-    
-    //Not yet used
-    public String returnName(int userID){
+   
+    /*public String returnName(int userID){
         java.sql.Statement statement = null;
-        currentQuery = "SELECT GENDER FROM USER WHERE ID = " + Integer.toString(userID);
+        currentQuery = "SELECT FIRST_NAME || " " || LAST_NAME FROM APP_USER WHERE ID = " + Integer.toString(userID);
         openConnection();
         try {
             statement = conn.createStatement();
@@ -69,12 +56,11 @@ public class DBController {
             Logger.getLogger(DBController.class.getName()).log(Level.SEVERE, null, ex);
             return "ERROR";
         }
-    }
+    }*/
     
-    public boolean sanitise(String username, String password){
-                //check special characters
-        
-                Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+    //check special characters
+    /*public boolean sanitise(String username, String password){
+        Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
         Matcher m1 = p.matcher(username);
         Matcher m2 = p.matcher(password);
         boolean b1 = m1.find();
@@ -88,12 +74,7 @@ public class DBController {
     //Authenticate
     public boolean authenticate(String username, String password){//, Boolean staff){
         java.sql.Statement statement = null;
-        //if (staff == true){
-            //currentQuery = "SELECT STAFFID FROM STAFF WHERE USERNAME = '" + username + "' AND PASSWORD = '" + password + "'";
-        //}
-        //else{
         currentQuery = "SELECT EMAIL FROM APP_USER WHERE EMAIL = '" + username + "' AND PASSWORD = '" + password + "'";
-        //}
         openConnection();
         try {
             statement = conn.createStatement();
@@ -161,28 +142,5 @@ public class DBController {
             Logger.getLogger(DBController.class.getName()).log(Level.SEVERE, null, ex);
             return "ERROR";
         }
-    }
-    
-    public String GetUserPK(){
-        java.sql.Statement statement = null;
-        currentQuery = "SELECT MAX(USERID) AS MAXX FROM USER";
-        openConnection();
-        try {
-            statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(currentQuery);
-            if (rs.next()){ 
-                conn.commit();
-                return rs.getString("MAXX");
-            }
-            else {
-                statement.close();
-                conn.commit();
-                return "NOTHING FOUND";
-            }
-           
-        } catch (SQLException ex) {
-            Logger.getLogger(DBController.class.getName()).log(Level.SEVERE, null, ex);
-            return "ERROR";
-        }
-    }
+    }*/
 }
