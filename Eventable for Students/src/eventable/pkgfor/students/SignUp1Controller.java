@@ -5,7 +5,6 @@
  */
 package eventable.pkgfor.students;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,20 +26,24 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author edhopkins
  */
 public class SignUp1Controller implements Initializable {
-    
+
     @FXML
     Stage stage;
     Parent root;
 
     @FXML
     private Button next;
-    
+    private TextField email;
+    private TextField password;
+    private TextField confirmPassword;
+
 //    @FXML 
 //    private ImageView home;
 //    
@@ -56,21 +59,45 @@ public class SignUp1Controller implements Initializable {
 //    public static String loggedInUser;
 //
 //    DBController d = new DBController(); //Establish a connection to the db
-
-    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        
-        
-    } 
-    
-    @FXML
-    private void nextButton(ActionEvent event) throws Exception{
-        loadNext("SignUp2.fxml"); 
+
     }
-    
-    public void loadNext(String destination){
-        stage=(Stage) next.getScene().getWindow();
+
+    @FXML
+    private void nextButton(ActionEvent event) throws Exception {
+//        //Check if there are empty fields
+//        if (Utils.extractStringIsEmpty(email)) {
+//            //TODO: Alert the user to some error (there is an empty field that is required...)
+//            
+//            //Error is found. Aborts the rest of the code execution
+//            return;
+//        }
+//        if (Utils.extractStringIsEmpty(password)) {
+//            //TODO: Alert the user to some error (there is an empty field that is required...)
+//            
+//            //Error is found. Aborts the rest of the code execution
+//            return;
+//        }
+//        if (Utils.extractStringIsEmpty(confirmPassword)) {
+//            //TODO: Alert the user to some error (there is an empty field that is required...)
+//            
+//            //Error is found. Aborts the rest of the code execution
+//            return;
+//        }
+//        
+//        //Check if the inputted passwords match
+//        if (Utils.extractString(password).hashCode() != Utils.extractString(confirmPassword).hashCode()) {
+//            //TODO: Alert the user to some error (the passwords entered do not match)
+//
+//            //Error is found. Aborts the rest of the code execution
+//            return;
+//        }
+            loadNext("SignUp2.fxml");
+    }
+
+    public void loadNext(String destination) {
+        stage = (Stage) next.getScene().getWindow();
         try {
             root = FXMLLoader.load(getClass().getResource(destination)); //putting it to 'Seek a Ride' for now, before we know what type of user each person is
         } catch (IOException ex) {
@@ -80,7 +107,7 @@ public class SignUp1Controller implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    
+
 //    @FXML
 //    private void SignInButton(ActionEvent event) throws Exception{
 //        DBController auth = new DBController();
