@@ -23,17 +23,27 @@ public class DBController {
                 Class.forName("oracle.jdbc.driver.OracleDriver");
                 conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","hr","hr");
                 Statement st=con.createStatement();
-                ResultSet rs=st.executeQuery("SELECT first_name FROM app_user");
-                while(rs.next()) {
-                    System.out.println(rs.getString(1));
+                
                 }
-                conn.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         }
     }
-   
+
+    public static void closeConnetion() {
+    try {
+        conn.close();
+    }
+     catch (SQLException ex) {
+        ex.printStackTrace();
+        }
+    }
+
+    public static void executeQuery() {
+        
+    }
+
     /*public String returnName(int userID){
         java.sql.Statement statement = null;
         currentQuery = "SELECT FIRST_NAME || " " || LAST_NAME FROM APP_USER WHERE ID = " + Integer.toString(userID);
