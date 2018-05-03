@@ -56,7 +56,7 @@ public class LoginController implements Initializable {
     private TextField email, password;
     
     @FXML
-    private Text errorText, errorText2;
+    private Text errorText, errorText2, forgotPassword;
     
     public static Connection conn;
     
@@ -125,6 +125,10 @@ public class LoginController implements Initializable {
                 loadNext("StudentScreenEvents_All.fxml");
             }
         }
+    
+    private void forgotPassword(ActionEvent event) throws Exception {
+        //Navigate to 'forgot password' page
+    }
 
     public void loadNext(String destination) {
         stage = (Stage) loginButton.getScene().getWindow();
