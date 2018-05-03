@@ -5,8 +5,13 @@
  */
 package eventable.pkgfor.students;
 
+
+import eventable.pkgfor.*;
+import static eventable.pkgfor.students.DBController.openConnection;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -50,13 +55,16 @@ public class LoginController implements Initializable {
     
     @FXML
     private Text errorText;
+    
+    public static Connection conn;
+    protected String currentQuery;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
     
     //Authenticate
-    public boolean authenticate(){
+    public boolean authenticate() throws ClassNotFoundException{
         String loggedInUser = email.toString();
         int loggedInpasswordHashed = password.hashCode();
         String loggedInpasswordHashedString = loggedInpasswordHashed + "";
