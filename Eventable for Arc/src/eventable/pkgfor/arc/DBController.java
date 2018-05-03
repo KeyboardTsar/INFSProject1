@@ -14,13 +14,13 @@ public class DBController {
     protected String currentQuery;
       
     //Open database connection
-    public static void openConnection() {
+   public static void openConnection() {
         if (conn == null) {
             try {
                 Class.forName("oracle.jdbc.driver.OracleDriver");
                 conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","hr","hr");
-                }
-            } catch (SQLException ex) {
+            }
+            catch (SQLException ex) {
                 ex.printStackTrace();
             }
         }
