@@ -57,7 +57,7 @@
                   <Font name="Helvetica Neue" size="14.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="789.0" layoutY="940.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FORGOT PASSWORD?" underline="true">
+            <Text fx:id="forgotPassword" fill="WHITE" layoutX="789.0" layoutY="940.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FORGOT PASSWORD?" underline="true">
                <font>
                   <Font name="Helvetica Neue" size="12.0" />
                </font>
