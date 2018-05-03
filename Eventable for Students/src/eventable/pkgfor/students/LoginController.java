@@ -75,10 +75,8 @@ public class LoginController implements Initializable {
         //Get email and password from fields
         statement = openConnection();
         String loggedInUser = email.getText();
-        String loggedInPassword = password.getText();
-        //int loggedInpasswordHashed = password.getText().hashCode();
-        //String loggedInpasswordHashedString = loggedInpasswordHashed + "";
-        //System.out.print(loggedInpassword);
+        int loggedInPasswordHashed = password.getText().hashCode();
+        String loggedInPasswordHashedString = loggedInPasswordHashed + "";
    
        //Checks if either field is empty
         if ((email.getText().isEmpty()) || (password.getText().isEmpty())) {
@@ -101,7 +99,7 @@ public class LoginController implements Initializable {
                 }
 
                 //Comparing passwords
-                if (loggedInPassword.matches(passwordStoredInDB)) {
+                if (loggedInPasswordHashedString.matches(passwordStoredInDB)) {
                     System.out.print("Password correct");
                     return true;
                 } else {
