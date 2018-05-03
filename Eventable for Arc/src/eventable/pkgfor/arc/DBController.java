@@ -11,12 +11,9 @@ import java.util.regex.Pattern;
 public class DBController {
     
     public static Connection conn;
-    //protected Statement st;
-    //protected ResultSet rs;
-    //protected ResultSetMetaData rsmd;
     protected String currentQuery;
       
-    //Used to open connection to the database
+    //Open database connection
     public static void openConnection() {
         if (conn == null) {
             try {
@@ -31,6 +28,7 @@ public class DBController {
         }
     }
 
+    //Close database connection
     public static void closeConnetion() {
     try {
         conn.close();
@@ -40,9 +38,26 @@ public class DBController {
         }
     }
 
-    public static void executeQuery() {
-        
+    //Takes in SQL Statement and returns Result Set
+    public ResultSet getResultSet(String sqlstatement) throws SQLException {
+        openConnection();
+        java.sql.Statement statement = conn.createStatement();
+        ResultSet rs = statement.executeQuery(sqlstatement);
+        return rs;
     }
+
+    /*
+    public static void performExecuteQuery(String query) {
+        ResultSet rs=stmt.executeQuery(query);
+        query.split(",")
+        String[] columns = query.split(",");
+        for (int i = 0; i < columnArray.length;i++){
+
+        }  
+        while(rs.next()) {
+            System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3));
+        }
+    }*/
 
     /*public String returnName(int userID){
         java.sql.Statement statement = null;
@@ -106,15 +121,7 @@ public class DBController {
         }
     }
     
-    // This method reads in an sql string and returns a result set
-    public ResultSet getResultSet(String sqlstatement) throws SQLException {
-        openConnection();
-        java.sql.Statement statement = conn.createStatement();
-        ResultSet RS = statement.executeQuery(sqlstatement);
-        //System.out.println(sqlstatement);
-        return RS;
-    }
-    
+   
     public void Insert(String insertSQL) {
         java.sql.Statement statement = null;
         openConnection();

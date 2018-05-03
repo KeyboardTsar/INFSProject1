@@ -67,6 +67,44 @@ public class LoginController implements Initializable {
 
     }
 
+    //check special characters
+    public boolean sanitise(String username, String password){
+        Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+        Matcher m1 = p.matcher(username);
+        Matcher m2 = p.matcher(password);
+        boolean b1 = m1.find();
+        boolean b2 = m2.find();
+        if (b1 || b2){
+            return false;
+        }
+        return true;
+    }
+    
+    //Authenticate
+    public boolean authenticate(String username, String password){//, Boolean staff){
+        java.sql.Statement statement = null;
+        currentQuery = "SELECT EMAIL FROM APP_USER WHERE EMAIL = '" + username + "' AND PASSWORD = '" + password + "'";
+        openConnection();
+        try {
+            statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(currentQuery);
+            if (rs.next()){
+                statement.close();
+                conn.commit();
+                return true;
+            }
+            else {
+                statement.close();
+                conn.commit();
+                return false;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DBController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
     @FXML
     private void loginButton(ActionEvent event) throws Exception {
 //        //Check if there are empty fields
