@@ -131,7 +131,7 @@ public class LoginController implements Initializable {
         }
     
     private void forgotPassword(MouseEvent event) {
-        loadNext("StudentScreenProfile.fxml"); //Need to update navigation with correct .fxml file
+        loadNext("StudentScreenProfile.fxml"); //Need to fix navigation with correct .fxml file
     }
 
     public void loadNext(String destination) {
