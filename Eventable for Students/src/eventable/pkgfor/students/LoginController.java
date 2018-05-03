@@ -7,9 +7,14 @@ package eventable.pkgfor.students;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +29,6 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
@@ -47,48 +51,24 @@ public class LoginController implements Initializable {
     @FXML
     private Text errorText;
 
-//    @FXML 
-//    private ImageView home;
-//    
-//    @FXML
-//    private TextField username;
-//    
-//    @FXML
-//    private PasswordField password;
-//    
-//    @FXML
-//    private Text SignInError, InjectionError;
-//    
-//    public static String loggedInUser;
-//
-//    DBController d = new DBController(); //Establish a connection to the db
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
-    //check special characters
-    public boolean sanitise(String username, String password){
-        Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
-        Matcher m1 = p.matcher(username);
-        Matcher m2 = p.matcher(password);
-        boolean b1 = m1.find();
-        boolean b2 = m2.find();
-        if (b1 || b2){
-            return false;
-        }
-        return true;
     }
     
     //Authenticate
-    public boolean authenticate(String username, String password){//, Boolean staff){
-        java.sql.Statement statement = null;
-        currentQuery = "SELECT EMAIL FROM APP_USER WHERE EMAIL = '" + username + "' AND PASSWORD = '" + password + "'";
+    public boolean authenticate(){
+        String loggedInUser = email.toString();
+        int loggedInpasswordHashed = password.hashCode();
+        String loggedInpasswordHashedString = loggedInpasswordHashed + "";
+        
         openConnection();
+        
+        String currentQuery = "SELECT PASSWORD FROM APP_USER WHERE EMAIL = '" + loggedInUser + "'";
         try {
-            statement = conn.createStatement();
+            Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(currentQuery);
-            if (rs.next()){
+            String passwordStoredInDB = rs.getString(1);
+            if (loggedInpasswordHashedString.matches(passwordStoredInDB)){
                 statement.close();
                 conn.commit();
                 return true;
@@ -107,41 +87,17 @@ public class LoginController implements Initializable {
     
     @FXML
     private void loginButton(ActionEvent event) throws Exception {
-//        //Check if there are empty fields
-//        if (Utils.extractStringIsEmpty(email)) {
-//            //TODO: Alert the user to some error (there is an empty field that is required...)
-//            
-//            //Error is found. Aborts the rest of the code execution
-//            return;
-//        }
-//        if (Utils.extractStringIsEmpty(password)) {
-//            //TODO: Alert the user to some error (there is an empty field that is required...)
-//            
-//            //Error is found. Aborts the rest of the code execution
-//            return;
-//        }
-//        if (Utils.extractStringIsEmpty(confirmPassword)) {
-//            //TODO: Alert the user to some error (there is an empty field that is required...)
-//            
-//            //Error is found. Aborts the rest of the code execution
-//            return;
-//        }
-//        
-//        //Check if the inputted passwords match
-//        if (Utils.extractString(password).hashCode() != Utils.extractString(confirmPassword).hashCode()) {
-//            //TODO: Alert the user to some error (the passwords entered do not match)
-//
-//            //Error is found. Aborts the rest of the code execution
-//            return;
-//        }
-        
-        //code below checks if either box is emptys
+        //Checks if either field is empty
         errorText.setVisible(false);
         System.out.println("FLAG1");
         if((email.getText().isEmpty()) || (password.getText().isEmpty())){
             errorText.setVisible(true);
         }
-        else{
+        else if (!authenticate()) {
+            errorText.setVisible(true);
+            
+        }
+        else {
             loadNext("StudentScreenEvents_All.fxml");
         }
     }
@@ -149,7 +105,7 @@ public class LoginController implements Initializable {
     public void loadNext(String destination) {
         stage = (Stage) loginButton.getScene().getWindow();
         try {
-            root = FXMLLoader.load(getClass().getResource(destination)); //putting it to 'Seek a Ride' for now, before we know what type of user each person is
+            root = FXMLLoader.load(getClass().getResource(destination));
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -158,6 +114,30 @@ public class LoginController implements Initializable {
         stage.show();
     }
 
+    
+    //    @FXML
+//    private void SignInButton(ActionEvent event) throws Exception{
+//        DBController auth = new DBController();
+//        SignInError.setVisible(false);
+//        InjectionError.setVisible(false);
+//        
+//        if (auth.sanitise(username.getText(), password.getText())){
+//            //InjectionError.setVisible(false);
+//                if (auth.authenticate(username.getText(), password.getText())){
+//                    loggedInUser = username.getText();
+//                    //userType = Integer.parseInt(d.returnSingleQuery("SELECT USERTYPE FROM USER WHERE USERNAME LIKE '" + loggedInUser + "'"));
+//                    loadNext("Seek a Ride.fxml"); //Change this to the main report page
+//
+//                }
+//                else {
+//                    SignInError.setVisible(true);
+//                }
+//        }
+//        else {
+//            InjectionError.setVisible(true);
+//        }
+      
+  
 //    @FXML
 //    private void SignInButton(ActionEvent event) throws Exception{
 //        DBController auth = new DBController();
