@@ -7,6 +7,7 @@ package eventable.pkgfor.students;
 
 
 import eventable.pkgfor.*;
+import static eventable.pkgfor.students.DBController.closeConnection;
 import static eventable.pkgfor.students.DBController.openConnection;
 import java.io.IOException;
 import java.net.URL;
@@ -16,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -54,61 +56,77 @@ public class LoginController implements Initializable {
     private TextField email, password;
     
     @FXML
-    private Text errorText;
+    private Text errorText, errorText2;
     
     public static Connection conn;
-    protected String currentQuery;
+    
+    public String currentQuery;
+    
+    public static ResultSet rs;
+    
+    public static Statement statement;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
     
     //Authenticate
-    public boolean authenticate() throws ClassNotFoundException{
-        String loggedInUser = email.toString();
-        int loggedInpasswordHashed = password.hashCode();
-        String loggedInpasswordHashedString = loggedInpasswordHashed + "";
-    
-        openConnection();
+    public boolean authenticate() throws ClassNotFoundException, SQLException{
+        //Get email and password from fields
+        statement = openConnection();
+        String loggedInUser = email.getText();
+        String loggedInPassword = password.getText();
+        //int loggedInpasswordHashed = password.getText().hashCode();
+        //String loggedInpasswordHashedString = loggedInpasswordHashed + "";
+        //System.out.print(loggedInpassword);
+   
+       //Checks if either field is empty
+        if ((email.getText().isEmpty()) || (password.getText().isEmpty())) {
+            errorText.setVisible(true);
+        }
+        else {
+        currentQuery = "SELECT PASSWORD FROM APP_USER WHERE EMAIL = '" + loggedInUser + "'";
+        String passwordStoredInDB = null;
         
-        String currentQuery = "SELECT PASSWORD FROM APP_USER WHERE EMAIL = '" + loggedInUser + "'";
         try {
-            Statement statement = conn.createStatement();
+            try {
             ResultSet rs = statement.executeQuery(currentQuery);
-            String passwordStoredInDB = rs.getString(1);
-            System.out.println(passwordStoredInDB);
-            if (loggedInpasswordHashedString.matches(passwordStoredInDB)){
-                statement.close();
-                conn.commit();
-                return true;
+            while (rs.next()) {
+                    passwordStoredInDB = rs.getString("PASSWORD");
             }
-            else {
-                statement.close();
-                conn.commit();
-                return false;
             }
-            
-        } catch (SQLException ex) {
+                    catch (NullPointerException e) {
+                    errorText2.setVisible(true);
+                    return false;
+                }
+
+                //Comparing passwords
+                if (loggedInPassword.matches(passwordStoredInDB)) {
+                    System.out.print("Password correct");
+                    return true;
+                } else {
+                    errorText2.setVisible(true);
+                    return false;
+                }
+            }
+        catch (Exception ex) {
             Logger.getLogger(DBController.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
+        return false;
+    }
     
     @FXML
     private void loginButton(ActionEvent event) throws Exception {
-        //Checks if either field is empty
-        errorText.setVisible(false);
-        System.out.println("FLAG1");
-        if((email.getText().isEmpty()) || (password.getText().isEmpty())){
-            errorText.setVisible(true);
+       errorText.setVisible(false);
+       errorText2.setVisible(false);
+        //Checks if password is correct
+            if (authenticate()) {
+                closeConnection(conn, rs, statement);
+                loadNext("StudentScreenEvents_All.fxml");
+            }
         }
-        else if (!authenticate()) {
-            errorText.setVisible(true);
-        }
-        else {
-            loadNext("StudentScreenEvents_All.fxml");
-        }
-    }
 
     public void loadNext(String destination) {
         stage = (Stage) loginButton.getScene().getWindow();
