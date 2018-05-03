@@ -14,7 +14,7 @@ public class DBController {
     protected String currentQuery;
       
     //Open database connection
-   public static void openConnection() {
+   public static void openConnection() throws ClassNotFoundException {
         if (conn == null) {
             try {
                 Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -37,7 +37,7 @@ public class DBController {
     }
 
     //Takes in SQL Statement and returns Result Set
-    public ResultSet getResultSet(String sqlstatement) throws SQLException {
+    public ResultSet getResultSet(String sqlstatement) throws SQLException, ClassNotFoundException {
         openConnection();
         java.sql.Statement statement = conn.createStatement();
         ResultSet rs = statement.executeQuery(sqlstatement);
