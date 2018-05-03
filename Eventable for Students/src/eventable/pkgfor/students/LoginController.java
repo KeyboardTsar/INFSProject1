@@ -60,7 +60,7 @@ public class LoginController implements Initializable {
         String loggedInUser = email.toString();
         int loggedInpasswordHashed = password.hashCode();
         String loggedInpasswordHashedString = loggedInpasswordHashed + "";
-        
+    
         openConnection();
         
         String currentQuery = "SELECT PASSWORD FROM APP_USER WHERE EMAIL = '" + loggedInUser + "'";
@@ -68,6 +68,7 @@ public class LoginController implements Initializable {
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(currentQuery);
             String passwordStoredInDB = rs.getString(1);
+            System.out.println(passwordStoredInDB);
             if (loggedInpasswordHashedString.matches(passwordStoredInDB)){
                 statement.close();
                 conn.commit();
