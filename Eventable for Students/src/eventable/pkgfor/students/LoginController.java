@@ -85,12 +85,16 @@ public class LoginController implements Initializable {
         else {
         currentQuery = "SELECT PASSWORD FROM APP_USER WHERE EMAIL = '" + loggedInUser + "'";
         String passwordStoredInDB = null;
+        int passwordStoredInDBHashed;
+        String passwordStoredInDBHashedString = null; //as passwords stored in DB are currently not hashed 
         
         try {
             try {
             ResultSet rs = statement.executeQuery(currentQuery);
             while (rs.next()) {
                     passwordStoredInDB = rs.getString("PASSWORD");
+                    passwordStoredInDBHashed = passwordStoredInDB.hashCode();
+                    passwordStoredInDBHashedString = passwordStoredInDBHashed + "";
             }
             }
                     catch (NullPointerException e) {
@@ -99,7 +103,7 @@ public class LoginController implements Initializable {
                 }
 
                 //Comparing passwords
-                if (loggedInPasswordHashedString.matches(passwordStoredInDB)) {
+                if (loggedInPasswordHashedString.matches(passwordStoredInDBHashedString)) {
                     System.out.print("Password correct");
                     return true;
                 } else {
