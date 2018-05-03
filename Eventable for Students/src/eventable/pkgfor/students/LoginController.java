@@ -95,7 +95,6 @@ public class LoginController implements Initializable {
         }
         else if (!authenticate()) {
             errorText.setVisible(true);
-            
         }
         else {
             loadNext("StudentScreenEvents_All.fxml");
