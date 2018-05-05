@@ -65,6 +65,8 @@ public class LoginController implements Initializable {
     public static ResultSet rs;
     
     public static Statement statement;
+    
+    public static String loggedInUser;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -74,7 +76,7 @@ public class LoginController implements Initializable {
     public boolean authenticate() throws ClassNotFoundException, SQLException{
         //Get email and password from fields
         statement = openConnection();
-        String loggedInUser = email.getText();
+        loggedInUser = email.getText();
         int loggedInPasswordHashed = password.getText().hashCode();
         String loggedInPasswordHashedString = loggedInPasswordHashed + "";
    

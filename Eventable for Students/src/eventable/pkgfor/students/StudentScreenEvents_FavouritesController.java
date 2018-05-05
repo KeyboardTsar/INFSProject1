@@ -5,26 +5,52 @@
  */
 package eventable.pkgfor.students;
 
+import static eventable.pkgfor.students.DBController.closeConnection;
+import static eventable.pkgfor.students.DBController.openConnection;
+import static eventable.pkgfor.students.LoginController.conn;
+import static eventable.pkgfor.students.LoginController.rs;
+import static eventable.pkgfor.students.LoginController.statement;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
  *
  * @author AriSurfacePro
  */
-public class StudentScreenEvents_FavouritesController implements Initializable {
+public class StudentScreenEvents_FavouritesController extends Application implements Initializable {
 
     @FXML
     Stage stage;
@@ -48,6 +74,24 @@ public class StudentScreenEvents_FavouritesController implements Initializable {
     private Text going;
     @FXML
     private Text past;
+    
+    @FXML
+    public TableView<FavouriteSocieties> tableofFavouriteSocieties;
+    @FXML
+    public TableColumn<FavouriteSocieties, String> societyName;
+    @FXML
+    public TableColumn<FavouriteSocieties, String> societyDescription;
+
+    Date currentDate;
+
+    ObservableList<FavouriteSocieties> societyData;
+
+    public static Connection conn;
+
+    public String currentQuery;
+
+    public static ResultSet rs;
+
 
 //    @FXML 
 //    private ImageView home;
@@ -63,65 +107,116 @@ public class StudentScreenEvents_FavouritesController implements Initializable {
 //    
 //    public static String loggedInUser;
 //
-//    DBController d = new DBController(); //Establish a connection to the db
-    
+    public void populateTableView() throws SQLException {
+        String loggedInUser = LoginController.loggedInUser;
+        statement = openConnection();
+        currentQuery = "SELECT society_name, society_description FROM society JOIN favourites f USING (society_id) WHERE f.email = '"+ loggedInUser + "'";
+        ResultSet rs = statement.executeQuery(currentQuery);
+
+        societyName.setCellValueFactory(new PropertyValueFactory<>("societyName"));
+        societyDescription.setCellValueFactory(new PropertyValueFactory<>("societyDescription"));
+
+        //Data added to observable List
+        societyData = FXCollections.observableArrayList();
+        try {
+            while (rs.next()) {
+                int i = 1;
+                societyData.add(new FavouriteSocieties(rs.getString(i), rs.getString(i + 1)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentScreenEvents_FavouritesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Data added to TableView
+        try {
+            tableofFavouriteSocieties.setItems(societyData);
+            //tableofFavouriteSocieties.getColumns().setAll(event, startDate, location);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(conn, rs, statement);
+        }
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        try {
+            populateTableView();
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentScreenEvents_FavouritesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @FXML
-    private void bottomNavSocietyButton(MouseEvent event) {
+    private void bottomNavSocietyButton(MouseEvent event) throws SQLException {
         loadNext("StudentScreenSociety_All.fxml");
     }
 
     @FXML
-    private void bottomNavCodeButton(MouseEvent event) {
+    private void bottomNavCodeButton(MouseEvent event) throws SQLException {
         loadNext("StudentScreenCode.fxml");
     }
 
     @FXML
-    private void bottomNavEventsButton(MouseEvent event) {
+    private void bottomNavEventsButton(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_All.fxml");
     }
 
     @FXML
-    private void bottomNavFeedbackButton(MouseEvent event) {
+    private void bottomNavFeedbackButton(MouseEvent event) throws SQLException {
         loadNext("StudentScreenFeedback_Feedback.fxml");
     }
 
     @FXML
-    private void bottomNavProfileButton(MouseEvent event) {
+    private void bottomNavProfileButton(MouseEvent event) throws SQLException {
         loadNext("StudentScreenProfile.fxml");
     }
 
     @FXML
-    private void topNavAll(MouseEvent event) {
+    private void topNavAll(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_All.fxml");
     }
 
     @FXML
-    private void topNavFavourites(MouseEvent event) {
-        loadNext("StudentScreenEvents_Favourites.fxml");
+    private void topNavFavourites(ActionEvent event) throws SQLException {
+        stage = (Stage) favourites.getScene().getWindow();
+        try {
+            root = FXMLLoader.load(getClass().getResource("StudentScreenEvents_Favourites.fxml"));
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
-    private void topNavGoing(MouseEvent event) {
+    private void topNavGoing(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_Going.fxml");
     }
 
     @FXML
-    private void topNavPast(MouseEvent event) {
+    private void topNavPast(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_Past.fxml");
     }
     
-    public void loadNext(String destination){
-        stage=(Stage) society.getScene().getWindow();
+    public void loadNext(String destination) {
+        stage = (Stage) society.getScene().getWindow();
         try {
-            root = FXMLLoader.load(getClass().getResource(destination)); //putting it to 'Seek a Ride' for now, before we know what type of user each person is
+            root = FXMLLoader.load(getClass().getResource(destination));
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    public void start(Stage primaryStage) throws Exception {
+        stage = (Stage) society.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

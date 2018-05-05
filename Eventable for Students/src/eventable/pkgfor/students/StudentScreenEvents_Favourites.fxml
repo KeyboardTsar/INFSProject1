@@ -59,8 +59,8 @@
                   <TextField layoutX="28.0" layoutY="14.0" prefHeight="32.0" prefWidth="282.0" promptText="Search" />
                   <TableView layoutX="26.0" layoutY="103.0" prefHeight="398.0" prefWidth="283.0">
                      <columns>
-                        <TableColumn prefWidth="75.0" text="C1" />
-                        <TableColumn prefWidth="75.0" text="C2" />
+                        <TableColumn fx:id="societyName" prefWidth="70.0" text="Society" />
+                        <TableColumn fx:id="societyDescription" prefWidth="220.0" text="Description" />
                      </columns>
                   </TableView>
                   <Accordion layoutX="77.0" layoutY="83.0" />
