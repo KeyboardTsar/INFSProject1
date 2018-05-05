@@ -26,7 +26,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -95,21 +94,6 @@ public class StudentScreenEvents_AllController extends Application implements In
 
     public static Statement statement;
 
-//    @FXML 
-//    private ImageView home;
-//    
-//    @FXML
-//    private TextField username;
-//    
-//    @FXML
-    //HH24:MI:SSxFF
-//    private PasswordField password;
-//    
-//    @FXML
-//    private Text SignInError, InjectionError;
-//    
-//    public static String loggedInUser;
-//
     public void populateTableView() throws SQLException {
         //Only display events that are in the future
         statement = openConnection();
@@ -126,11 +110,7 @@ public class StudentScreenEvents_AllController extends Application implements In
         eventsData = FXCollections.observableArrayList();
         try {
             while (rs.next()) {
-                //ObservableList<Events> row = FXCollections.observableArrayList();
                 int i = 1;
-                //for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
-                //row.add(new Events(rs.getString(i), rs.getString(i+1), rs.getString(i+2)));
-                //}
                 eventsData.add(new Events(rs.getString(i), rs.getString(i + 1), rs.getString(i + 2)));
             }
         } catch (SQLException ex) {
@@ -203,7 +183,7 @@ public class StudentScreenEvents_AllController extends Application implements In
         loadNext("StudentScreenEvents_Past.fxml");
     }
 
-    public void loadNext(String destination) throws SQLException {
+    public void loadNext(String destination) {
         stage = (Stage) society.getScene().getWindow();
         try {
             root = FXMLLoader.load(getClass().getResource(destination));
@@ -226,7 +206,7 @@ public class StudentScreenEvents_AllController extends Application implements In
     }
     
     //    @FXML
-//    private void SignInButton(ActionEvent event) throws Exception{
+//    private void SignInButton(MouseEvent event) throws Exception{
 //        DBController auth = new DBController();
 //        SignInError.setVisible(false);
 //        InjectionError.setVisible(false);

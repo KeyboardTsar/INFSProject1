@@ -5,31 +5,57 @@
  */
 package eventable.pkgfor.students;
 
+import static eventable.pkgfor.students.DBController.closeConnection;
+import static eventable.pkgfor.students.DBController.openConnection;
+import static eventable.pkgfor.students.LoginController.conn;
+import static eventable.pkgfor.students.LoginController.rs;
+import static eventable.pkgfor.students.LoginController.statement;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
  *
  * @author AriSurfacePro
  */
-public class StudentScreenEvents_GoingController implements Initializable {
+public class StudentScreenEvents_GoingController extends Application implements Initializable {
 
     @FXML
     Stage stage;
     Parent root;
-    
+
     @FXML
     private Text society;
     @FXML
@@ -48,80 +74,132 @@ public class StudentScreenEvents_GoingController implements Initializable {
     private Text going;
     @FXML
     private Text past;
+    @FXML
+    public TableView<Events> tableofEventsGoing;
+    @FXML
+    public TableColumn<Events, String> event;
+    @FXML
+    public TableColumn<Events, String> startDate;
+    @FXML
+    public TableColumn<Events, String> location;
 
-//    @FXML 
-//    private ImageView home;
-//    
-//    @FXML
-//    private TextField username;
-//    
-//    @FXML
-//    private PasswordField password;
-//    
-//    @FXML
-//    private Text SignInError, InjectionError;
-//    
-//    public static String loggedInUser;
-//
-//    DBController d = new DBController(); //Establish a connection to the db
-    
+    Date currentDate;
+
+    ObservableList<Events> eventsGoingData;
+
+    public static Connection conn;
+
+    public String currentQuery;
+
+    public static ResultSet rs;
+
+    public static Statement statement;
+
+    public void populateTableView() throws SQLException {
+        //Only display events that are in the future
+        String loggedInUser = LoginController.loggedInUser;
+        statement = openConnection();
+        currentQuery = "SELECT event_title, CAST(TO_CHAR(EVENT_START, 'dd/MON/yy') AS VARCHAR2(50)) EVENT_START, LOCATION_TYPE FROM EVENT e JOIN ATTENDANCE a USING (event_id) WHERE a.event_theoretical_attendance = 'Y' and e.EVENT_START >= '05/MAY/2018' and a.email = '" + loggedInUser + "'";
+        ResultSet rs = statement.executeQuery(currentQuery);
+
+        event.setCellValueFactory(new PropertyValueFactory<>("event"));
+        startDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        location.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        //Data added to observable List
+        eventsGoingData = FXCollections.observableArrayList();
+        try {
+            while (rs.next()) {
+                int i = 1;
+                eventsGoingData.add(new Events(rs.getString(i), rs.getString(i + 1), rs.getString(i + 2)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentScreenEvents_AllController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Data added to TableView
+        try {
+            tableofEventsGoing.setItems(eventsGoingData);
+            //tableofEvents.getColumns().setAll(event, startDate, location);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(conn, rs, statement);
+        }
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        try {
+            populateTableView();
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentScreenEvents_AllController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @FXML
-    private void bottomNavSocietyButton(MouseEvent event) {
+    private void bottomNavSocietyButton(MouseEvent event) throws SQLException {
         loadNext("StudentScreenSociety_All.fxml");
     }
 
     @FXML
-    private void bottomNavCodeButton(MouseEvent event) {
+    private void bottomNavCodeButton(MouseEvent event) throws SQLException {
         loadNext("StudentScreenCode.fxml");
     }
 
     @FXML
-    private void bottomNavEventsButton(MouseEvent event) {
+    private void bottomNavEventsButton(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_All.fxml");
     }
 
     @FXML
-    private void bottomNavFeedbackButton(MouseEvent event) {
+    private void bottomNavFeedbackButton(MouseEvent event) throws SQLException {
         loadNext("StudentScreenFeedback_Feedback.fxml");
     }
 
     @FXML
-    private void bottomNavProfileButton(MouseEvent event) {
+    private void bottomNavProfileButton(MouseEvent event) throws SQLException {
         loadNext("StudentScreenProfile.fxml");
     }
 
     @FXML
-    private void topNavAll(MouseEvent event) {
+    private void topNavAll(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_All.fxml");
     }
 
     @FXML
-    private void topNavFavourites(MouseEvent event) {
+    private void topNavFavourites(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_Favourites.fxml");
     }
 
     @FXML
-    private void topNavGoing(MouseEvent event) {
+    private void topNavGoing(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_Going.fxml");
     }
 
     @FXML
-    private void topNavPast(MouseEvent event) {
+    private void topNavPast(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_Past.fxml");
     }
-    
-    public void loadNext(String destination){
-        stage=(Stage) society.getScene().getWindow();
+
+    public void loadNext(String destination) throws SQLException {
+        stage = (Stage) society.getScene().getWindow();
         try {
-            root = FXMLLoader.load(getClass().getResource(destination)); //putting it to 'Seek a Ride' for now, before we know what type of user each person is
+            root = FXMLLoader.load(getClass().getResource(destination));
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        Scene scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        stage = (Stage) society.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -168,5 +246,5 @@ public class StudentScreenEvents_GoingController implements Initializable {
 //    public static String getUser(){
 //        return loggedInUser;
 //    } 
-    
+
 }

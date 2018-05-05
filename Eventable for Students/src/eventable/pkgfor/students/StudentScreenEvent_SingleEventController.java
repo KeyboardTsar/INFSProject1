@@ -5,17 +5,32 @@
  */
 package eventable.pkgfor.students;
 
+import static eventable.pkgfor.students.DBController.closeConnection;
+import static eventable.pkgfor.students.DBController.openConnection;
+import static eventable.pkgfor.students.StudentScreenEvents_AllController.conn;
+import static eventable.pkgfor.students.StudentScreenEvents_AllController.statement;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -47,29 +62,64 @@ public class StudentScreenEvent_SingleEventController implements Initializable {
     private Text other;
     @FXML
     private Button backButton;
+    @FXML
+    public TableView<Events> tableofEvents;
+    @FXML
+    public TableColumn<Events, String> event;
+    @FXML
+    public TableColumn<Events, String> startDate;
+    @FXML
+    public TableColumn<Events, String> location;
 
-    //    @FXML 
-//    private ImageView home;
-//    
-//    @FXML
-//    private TextField username;
-//    
-//    @FXML
-//    private PasswordField password;
-//    
-//    @FXML
-//    private Text SignInError, InjectionError;
-//    
-//    public static String loggedInUser;
-//
-//    DBController d = new DBController(); //Establish a connection to the db
-    
+    ObservableList<Events> eventsSingleData;
+
+    public static Connection conn;
+
+    public String currentQuery;
+
+    public static ResultSet rs;
+
+    public static Statement statement;
+  
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
 
-    @FXML
+    public void populateTableView() throws SQLException {
+        //Only display events that are in the future
+        statement = openConnection();
+       
+        currentQuery = "SELECT EVENT_TITLE, CAST(TO_CHAR(EVENT_START, 'dd/MON/yy') AS VARCHAR2(50)) EVENT_START, LOCATION_TYPE FROM EVENT WHERE EVENT_START >= '05/MAY/2018'";
+        rs = statement.executeQuery(currentQuery);
+
+        event.setCellValueFactory(new PropertyValueFactory<>("event"));
+        startDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        location.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        //Data added to observable List
+        eventsSingleData = FXCollections.observableArrayList();
+        try {
+            while (rs.next()) {
+                int i = 1;
+                eventsSingleData.add(new Events(rs.getString(i), rs.getString(i + 1), rs.getString(i + 2)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentScreenEvents_AllController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Data added to TableView
+        try {
+            tableofEvents.setItems(eventsSingleData);
+            //tableofEvents.getColumns().setAll(event, startDate, location);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(conn, rs, statement);
+        }
+    }
+    
+        @FXML
     private void bottomNavSocietyButton(MouseEvent event) {
         loadNext("StudentScreenSociety_All.fxml");
     }
@@ -162,5 +212,4 @@ public class StudentScreenEvent_SingleEventController implements Initializable {
 //    public static String getUser(){
 //        return loggedInUser;
 //    } 
-    
 }

@@ -6,7 +6,6 @@
 package eventable.pkgfor.students;
 
 import javafx.beans.property.SimpleStringProperty;
-
 /**
  *
  * @author Ajay Matta
@@ -43,5 +42,4 @@ public class Events {
         startDate = new SimpleStringProperty(startDates);
         this.location = new SimpleStringProperty(locations);
     }
-    
 }

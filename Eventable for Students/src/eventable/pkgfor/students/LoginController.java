@@ -128,7 +128,9 @@ public class LoginController implements Initializable {
         //Checks if password is correct
             if (authenticate()) {
                 closeConnection(conn, rs, statement);
-                loadNext("StudentScreenEvents_All.fxml");
+                //loadNext("StudentScreenEvents_All.fxml");
+                loadNext("StudentScreenEvents_Favourites.fxml");
+               // loadNext("StudentScreenEvents_Going.fxml");
             }
         }
     

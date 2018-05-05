@@ -45,11 +45,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-/**
- * FXML Controller class
- *
- * @author AriSurfacePro
- */
 public class StudentScreenEvents_FavouritesController extends Application implements Initializable {
 
     @FXML
@@ -74,15 +69,12 @@ public class StudentScreenEvents_FavouritesController extends Application implem
     private Text going;
     @FXML
     private Text past;
-    
     @FXML
     public TableView<FavouriteSocieties> tableofFavouriteSocieties;
     @FXML
     public TableColumn<FavouriteSocieties, String> societyName;
     @FXML
     public TableColumn<FavouriteSocieties, String> societyDescription;
-
-    Date currentDate;
 
     ObservableList<FavouriteSocieties> societyData;
 
@@ -92,6 +84,7 @@ public class StudentScreenEvents_FavouritesController extends Application implem
 
     public static ResultSet rs;
 
+    public static Statement statement;
 
 //    @FXML 
 //    private ImageView home;
@@ -118,6 +111,7 @@ public class StudentScreenEvents_FavouritesController extends Application implem
 
         //Data added to observable List
         societyData = FXCollections.observableArrayList();
+        
         try {
             while (rs.next()) {
                 int i = 1;
@@ -126,19 +120,18 @@ public class StudentScreenEvents_FavouritesController extends Application implem
         } catch (SQLException ex) {
             Logger.getLogger(StudentScreenEvents_FavouritesController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         //Data added to TableView
         try {
             tableofFavouriteSocieties.setItems(societyData);
-            //tableofFavouriteSocieties.getColumns().setAll(event, startDate, location);
+            tableofFavouriteSocieties.setFixedCellSize(60.0);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             closeConnection(conn, rs, statement);
         }
-
     }
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -179,16 +172,8 @@ public class StudentScreenEvents_FavouritesController extends Application implem
     }
 
     @FXML
-    private void topNavFavourites(ActionEvent event) throws SQLException {
-        stage = (Stage) favourites.getScene().getWindow();
-        try {
-            root = FXMLLoader.load(getClass().getResource("StudentScreenEvents_Favourites.fxml"));
-        } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    private void topNavFavourites(MouseEvent event) throws SQLException {
+        loadNext("StudentScreenEvents_Favourites.fxml");
     }
 
     @FXML
@@ -215,6 +200,7 @@ public class StudentScreenEvents_FavouritesController extends Application implem
         stage.show();
     }
     
+    @Override
     public void start(Stage primaryStage) throws Exception {
         stage = (Stage) society.getScene().getWindow();
         Scene scene = new Scene(root);
@@ -263,5 +249,4 @@ public class StudentScreenEvents_FavouritesController extends Application implem
 //    public static String getUser(){
 //        return loggedInUser;
 //    } 
-    
 }
