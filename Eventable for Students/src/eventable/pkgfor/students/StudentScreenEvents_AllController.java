@@ -159,47 +159,47 @@ public class StudentScreenEvents_AllController extends Application implements In
     }
 
     @FXML
-    private void bottomNavSocietyButton(ActionEvent event) throws SQLException {
+    private void bottomNavSocietyButton(MouseEvent event) throws SQLException {
         loadNext("StudentScreenSociety_All.fxml");
     }
 
     @FXML
-    private void bottomNavCodeButton(ActionEvent event) throws SQLException {
+    private void bottomNavCodeButton(MouseEvent event) throws SQLException {
         loadNext("StudentScreenCode.fxml");
     }
 
     @FXML
-    private void bottomNavEventsButton(ActionEvent event) throws SQLException {
+    private void bottomNavEventsButton(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_All.fxml");
     }
 
     @FXML
-    private void bottomNavFeedbackButton(ActionEvent event) throws SQLException {
+    private void bottomNavFeedbackButton(MouseEvent event) throws SQLException {
         loadNext("StudentScreenFeedback_Feedback.fxml");
     }
 
     @FXML
-    private void bottomNavProfileButton(ActionEvent event) throws SQLException {
+    private void bottomNavProfileButton(MouseEvent event) throws SQLException {
         loadNext("StudentScreenProfile.fxml");
     }
 
     @FXML
-    private void topNavAll(ActionEvent event) throws SQLException {
+    private void topNavAll(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_All.fxml");
     }
 
     @FXML
-    private void topNavFavourites(ActionEvent event) throws SQLException {
+    private void topNavFavourites(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_Favourites.fxml");
     }
 
     @FXML
-    private void topNavGoing(ActionEvent event) throws SQLException {
+    private void topNavGoing(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_Going.fxml");
     }
 
     @FXML
-    private void topNavPast(ActionEvent event) throws SQLException {
+    private void topNavPast(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_Past.fxml");
     }
 
