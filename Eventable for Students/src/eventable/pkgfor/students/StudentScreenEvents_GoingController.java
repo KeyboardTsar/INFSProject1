@@ -34,7 +34,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -112,6 +114,34 @@ public class StudentScreenEvents_GoingController extends Application implements 
         } catch (SQLException ex) {
             Logger.getLogger(StudentScreenEvents_AllController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        event.setCellFactory(tc -> {
+            TableCell<Events, String> cell = new TableCell<>();
+            Text text = new Text();
+            cell.setGraphic(text);
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            text.wrappingWidthProperty().bind(event.widthProperty());
+            text.textProperty().bind(cell.itemProperty());
+            return cell;
+        });
+        startDate.setCellFactory(tc -> {
+            TableCell<Events, String> cell = new TableCell<>();
+            Text text = new Text();
+            cell.setGraphic(text);
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            text.wrappingWidthProperty().bind(startDate.widthProperty());
+            text.textProperty().bind(cell.itemProperty());
+            return cell;
+        });
+        location.setCellFactory(tc -> {
+            TableCell<Events, String> cell = new TableCell<>();
+            Text text = new Text();
+            cell.setGraphic(text);
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            text.wrappingWidthProperty().bind(location.widthProperty());
+            text.textProperty().bind(cell.itemProperty());
+            return cell;
+        });
 
         //Data added to TableView
         try {

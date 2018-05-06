@@ -6,6 +6,7 @@
 package eventable.pkgfor.students;
 
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 /**
@@ -14,6 +15,9 @@ import javafx.scene.control.TextField;
  */
 public class Utils {
     public static String extractString(TextField field){
+        return field.getText().trim();
+    }
+    public static String extractString(PasswordField field){
         return field.getText().trim();
     }
     
@@ -27,5 +31,9 @@ public class Utils {
     
     public static boolean extractStringIsEmpty (ComboBox comboBox) {
         return extractString(comboBox).isEmpty();
+    }
+    
+    public static boolean extractStringIsEmpty (PasswordField field) {
+        return extractString(field).isEmpty();
     }
 }

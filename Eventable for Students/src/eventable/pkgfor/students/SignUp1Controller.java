@@ -47,9 +47,12 @@ public class SignUp1Controller extends Application implements Initializable {
 
     @FXML
     private Button next;
-    public TextField password, confirmPassword;
+    @FXML
+    public PasswordField confirmPassword;
     public TextField email;
     public Text errorText;
+    @FXML
+    public PasswordField password;
     @FXML
     private ImageView backButton;
 

@@ -23,6 +23,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Control;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -84,11 +86,30 @@ public class StudentScreenSociety_FavouritesController extends Application imple
         } catch (SQLException ex) {
             Logger.getLogger(StudentScreenEvents_FavouritesController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        societyDescription.setCellFactory(tc -> {
+            TableCell<FavouriteSocieties, String> cell = new TableCell<>();
+            Text text = new Text();
+            cell.setGraphic(text);
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            text.wrappingWidthProperty().bind(societyDescription.widthProperty());
+            text.textProperty().bind(cell.itemProperty());
+            return cell;
+        });
+        societyName.setCellFactory(tc -> {
+            TableCell<FavouriteSocieties, String> cell = new TableCell<>();
+            Text text = new Text();
+            cell.setGraphic(text);
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            text.wrappingWidthProperty().bind(societyName.widthProperty());
+            text.textProperty().bind(cell.itemProperty());
+            return cell;
+        });
 
         //Data added to TableView
         try {
             tableOfSocieties.setItems(societyData);
-            tableOfSocieties.setFixedCellSize(60.0);
+//            tableOfSocieties.setFixedCellSize(60.0);
         } catch (Exception e) {
             e.printStackTrace();
         }// finally {

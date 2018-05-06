@@ -120,14 +120,14 @@ public class StudentScreenEvents_AllController extends Application implements In
         } catch (SQLException ex) {
             Logger.getLogger(StudentScreenEvents_AllController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-                event.setCellFactory(tc -> {
+
+        event.setCellFactory(tc -> {
             TableCell<Events, String> cell = new TableCell<>();
             Text text = new Text();
             cell.setGraphic(text);
             cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
             text.wrappingWidthProperty().bind(event.widthProperty());
-            text.textProperty().bind(cell.itemProperty()); 
+            text.textProperty().bind(cell.itemProperty());
             return cell;
         });
         startDate.setCellFactory(tc -> {
@@ -136,7 +136,7 @@ public class StudentScreenEvents_AllController extends Application implements In
             cell.setGraphic(text);
             cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
             text.wrappingWidthProperty().bind(startDate.widthProperty());
-            text.textProperty().bind(cell.itemProperty()); 
+            text.textProperty().bind(cell.itemProperty());
             return cell;
         });
         location.setCellFactory(tc -> {
@@ -145,7 +145,7 @@ public class StudentScreenEvents_AllController extends Application implements In
             cell.setGraphic(text);
             cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
             text.wrappingWidthProperty().bind(location.widthProperty());
-            text.textProperty().bind(cell.itemProperty()); 
+            text.textProperty().bind(cell.itemProperty());
             return cell;
         });
 
@@ -156,7 +156,7 @@ public class StudentScreenEvents_AllController extends Application implements In
         } catch (Exception e) {
             e.printStackTrace();
         } //finally {
-            //closeConnection(conn, rs, statement);
+        //closeConnection(conn, rs, statement);
         //}
 
     }
@@ -243,7 +243,7 @@ public class StudentScreenEvents_AllController extends Application implements In
         stage.setScene(scene);
         stage.show();
     }
-    
+
     //    @FXML
 //    private void SignInButton(MouseEvent event) throws Exception{
 //        DBController auth = new DBController();
@@ -285,5 +285,4 @@ public class StudentScreenEvents_AllController extends Application implements In
 //    public static String getUser(){
 //        return loggedInUser;
 //    } 
-
 }

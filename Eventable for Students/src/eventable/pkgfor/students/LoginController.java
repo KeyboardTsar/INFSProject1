@@ -55,7 +55,9 @@ public class LoginController implements Initializable {
     private ImageView backButton;
     
     @FXML
-    private TextField email, password;
+    private TextField email;
+    @FXML
+    public PasswordField password;
     
     @FXML
     private Text errorText, errorText2, forgotPassword;
@@ -110,7 +112,7 @@ public class LoginController implements Initializable {
 
                 //Comparing passwords
                 if (loggedInPasswordHashedString.matches(passwordStoredInDBHashedString)) {
-                    System.out.print("Password correct");
+                    System.out.print("Password correct" + loggedInPasswordHashedString);
                     return true;
                 } else {
                     errorText2.setVisible(true);
