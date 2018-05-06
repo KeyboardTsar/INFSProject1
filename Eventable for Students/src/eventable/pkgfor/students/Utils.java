@@ -17,6 +17,6 @@ public class Utils {
     }
     
     public static boolean extractStringIsEmpty(TextField field){
-        return extractString(field).isEmpty();
+        return field.toString().trim().isEmpty();
     }
 }

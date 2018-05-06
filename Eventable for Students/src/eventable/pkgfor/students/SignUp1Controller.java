@@ -18,6 +18,8 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,15 +44,15 @@ public class SignUp1Controller extends Application implements Initializable {
     @FXML
     Stage stage;
     Parent root;
-    
+
     @FXML
     private Button next;
-    private TextField password, confirmPassword;
+    public TextField password, confirmPassword;
     public TextField email;
-    private Text errorText, errorText2, errorText3, errorText4, errorText5, errorText6, errorText7, errorText8, errorText9;
+    public Text errorText;
 
     char ch;
-    
+
     public static Connection conn;
 
     public String currentQuery;
@@ -65,88 +67,44 @@ public class SignUp1Controller extends Application implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public Boolean validatePassword() throws SQLException {
-        errorText.setVisible(false);
-        errorText2.setVisible(false);
-        errorText3.setVisible(false);
-        errorText4.setVisible(false);
-        errorText5.setVisible(false);
-        errorText6.setVisible(false);
-        errorText7.setVisible(false);
-        errorText8.setVisible(false);
-        errorText9.setVisible(false);
-
+    public Boolean validateRegistration() throws SQLException {
         if (Utils.extractStringIsEmpty(email)) {
-            errorText.setVisible(true);
+            setError("Email cannot be empty");
             return false;
         }
         if (Utils.extractStringIsEmpty(password)) {
-            errorText2.setVisible(true);
+            setError("Password cannot be empty");
             return false;
         }
+
         if (Utils.extractStringIsEmpty(confirmPassword)) {
-            errorText3.setVisible(true);
+            setError("Confirm Password cannot be empty");
+            return false;
+        }
+
+        if (!checkPasswordRequirements()) {
             return false;
         }
         if (!confirmPassword.getText().equals(password.getText())) {
-            errorText4.setVisible(true);
+            setError("Passwords entered do not match");
             return false;
-        } else {
-            userPassword = password.getText();
-            //Check password length
-            if (userPassword.length() < 8) {
-                errorText5.setVisible(true);
-                return false;
-            }
-            //Check lowerCase;
-            if (!(Character.isLowerCase(ch))) {
-                for (int i = 1; i < userPassword.length(); i++) {
-                    ch = userPassword.charAt(i);
-                    if (!Character.isLowerCase(ch)) {
-                        errorText6.setVisible(true);
-                        return false;
-                    }
-                }
-            }
-            //Check upperCase:
-            if (!(Character.isUpperCase(ch))) {
-                for (int i = 1; i < userPassword.length(); i++) {
-                    ch = userPassword.charAt(i);
-                    if (!Character.isUpperCase(ch)) {
-                        errorText7.setVisible(true);
-                        return false;
-                    }
-                }
-            }
-            //Check if password contains number
-            String patternNumber = "(?=.*[0-9])";
-            if (!userPassword.matches(patternNumber)) {
-                errorText8.setVisible(true);
-                return false;
-            }
-            //Check if password contains special character
-            String patternSpecialCharacter = "(?=.*[@#$%^&+=])";
-            if (!userPassword.matches(patternSpecialCharacter)) {
-                errorText9.setVisible(true);
-                return false;
-            }
         }
         //Inputting details into database
         int userPasswordHashed = userPassword.hashCode();
         String userPasswordHashedString = userPasswordHashed + "";
         statement = openConnection();
-        currentQuery = "INSERT INTO APP_USER(email, password) VALUES('" + email.getText() + "', '" + userPasswordHashedString + "'";
+        currentQuery = "INSERT INTO APP_USER(email, password) VALUES('" + email.getText() + "', '" + userPasswordHashedString + "')";
         int update = statement.executeUpdate(currentQuery);
         return true;
     }
-    
+
     @FXML
     private void nextButton(ActionEvent event) throws SQLException {
-        if (validatePassword()) {
+        if (validateRegistration()) {
             System.out.print("Entered nextButton method");
         closeConnection(conn, rs, statement);
-        loadNext("SignUp2.fxml");
-    }
+            loadNext("SignUp2.fxml");
+        }
     }
 
     public void loadNext(String destination) {
@@ -167,6 +125,70 @@ public class SignUp1Controller extends Application implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void setError(String errorMessage) {
+        errorText.setText(errorMessage);
+        errorText.setVisible(true);
+    }
+
+    public boolean checkPasswordRequirements() {
+        boolean hasUpper = false;
+        boolean hasLower = false;
+        boolean hasNumber = false;
+        boolean hasSymbol = false;
+        userPassword = password.getText();
+        //Check password length
+        if (userPassword.length() < 8) {
+            setError("Password does not meet requirements. At least: 8 characters in length, 1 uppercase/lowercase letter, 1 number & 1 symbol");
+            return false;
+        }
+        //Check upperCase:
+        for (int i = 1; i < userPassword.length(); i++) {
+            ch = userPassword.charAt(i);
+            if (Character.isUpperCase(ch)) {
+                hasUpper = true;
+                break;
+            }
+        }
+        if (!hasUpper) {
+            setError("Password does not meet requirements. At least: 8 characters in length, 1 uppercase/lowercase letter, 1 number & 1 symbol");
+            return false;
+        }
+        //Check lowerCase:
+        for (int i = 1; i < userPassword.length(); i++) {
+            ch = userPassword.charAt(i);
+            if (Character.isLowerCase(ch)) {
+                hasLower = true;
+                break;
+            }
+        }
+        if (!hasLower) {
+            setError("Password does not meet requirements. At least: 8 characters in length, 1 uppercase/lowercase letter, 1 number & 1 symbol");
+            return false;
+        }
+        //Check if password contains number
+        for (int i = 0; i < userPassword.length(); i++) {
+            for (int j = 0; j < 10; j++) {
+                if (userPassword.charAt(i) == Integer.toString(j).charAt(0)) {
+                    hasNumber = true;
+                    break;
+                }
+            }
+        }
+        if (!hasNumber) {
+            setError("Password does not meet requirements. At least: 8 characters in length, 1 uppercase/lowercase letter, 1 number & 1 symbol");
+            return false;
+        }
+        //Check if password contains symbol
+        Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(userPassword);
+        hasSymbol = m.find();
+        if (!hasSymbol) {
+            setError("Password does not meet requirements. At least: 8 characters in length, 1 uppercase/lowercase letter, 1 number & 1 symbol");
+            return false;
+        }
+        return true;
     }
 }
 
@@ -194,3 +216,4 @@ public class SignUp1Controller extends Application implements Initializable {
 //    public static String getUser(){
 //        return loggedInUser;
 //    } 
+//setError("Password does not meet requirements. At least: 1 upper/lowercase letter, 1 number & 1 symbol");
