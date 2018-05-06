@@ -60,8 +60,6 @@ public class SignUp3Controller extends Application implements Initializable {
     public static ResultSet rs;
 
     public static Statement statement;
-
-    public String userPassword;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -77,7 +75,7 @@ public class SignUp3Controller extends Application implements Initializable {
             return false;
         }
         statement = openConnection();
-        currentQuery = "UPDATE(email, password) SET degree = '" + degree.getText() + "', " + "SET graduation_year = '" + graduationYear.getText() + "'";
+        currentQuery = "UPDATE app_user SET degree = '" + degree.getText() + "', " + "graduation_year = '" + graduationYear.getText() + "'" + "WHERE email = '" + SignUp1Controller.userEmailAddress + "'";
         System.out.print(currentQuery);
         int update = statement.executeUpdate(currentQuery);
         return true;

@@ -126,9 +126,9 @@ public class StudentScreenEvents_PastController extends Application implements I
             //tableofEvents.getColumns().setAll(event, startDate, location);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            closeConnection(conn, rs, statement);
-        }
+        } //finally {
+            //closeConnection(conn, rs, statement);
+        //}
 
     }
 
@@ -137,7 +137,7 @@ public class StudentScreenEvents_PastController extends Application implements I
         try {
             populateTableView();
         } catch (SQLException ex) {
-            Logger.getLogger(StudentScreenEvents_AllController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StudentScreenEvents_PastController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -202,6 +202,7 @@ public class StudentScreenEvents_PastController extends Application implements I
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        populateTableView();
         stage = (Stage) society.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

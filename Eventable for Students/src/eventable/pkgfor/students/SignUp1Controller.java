@@ -62,6 +62,8 @@ public class SignUp1Controller extends Application implements Initializable {
     public static Statement statement;
 
     public String userPassword;
+    
+    public static String userEmailAddress;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -95,13 +97,13 @@ public class SignUp1Controller extends Application implements Initializable {
         statement = openConnection();
         currentQuery = "INSERT INTO APP_USER(email, password) VALUES('" + email.getText() + "', '" + userPasswordHashedString + "')";
         int update = statement.executeUpdate(currentQuery);
+        userEmailAddress = email.getText();
         return true;
     }
 
     @FXML
     private void nextButton(ActionEvent event) throws SQLException {
         if (validateRegistration()) {
-            System.out.print("Entered nextButton method");
             closeConnection(conn, rs, statement);
             loadNext("SignUp2.fxml");
         }
@@ -140,7 +142,7 @@ public class SignUp1Controller extends Application implements Initializable {
         userPassword = password.getText();
         //Check password length
         if (userPassword.length() < 8) {
-            setError("Password does not meet requirements. At least: 8 characters in length, 1 uppercase/lowercase letter, 1 number & 1 symbol");
+            setError("Password does not meet requirements. Minimum length should be 8 characters");
             System.out.println("Failed length requirement");
             return false;
         }
@@ -153,7 +155,7 @@ public class SignUp1Controller extends Application implements Initializable {
             }
         }
         if (!hasUpper) {
-            setError("Password does not meet requirements. At least: 8 characters in length, 1 uppercase/lowercase letter, 1 number & 1 symbol");
+            setError("Password does not meet requirements. At least 1 uppercase letter is required");
             System.out.println("Failed Uppercase requirement");
             return false;
         }
@@ -166,7 +168,7 @@ public class SignUp1Controller extends Application implements Initializable {
             }
         }
         if (!hasLower) {
-            setError("Password does not meet requirements. At least: 8 characters in length, 1 uppercase/lowercase letter, 1 number & 1 symbol");
+            setError("Password does not meet requirements. At least 1 lowercase letter is required");
             System.out.println("Failed lowercase requirement");
             return false;
         }
@@ -180,7 +182,7 @@ public class SignUp1Controller extends Application implements Initializable {
             }
         }
         if (!hasNumber) {
-            setError("Password does not meet requirements. At least: 8 characters in length, 1 uppercase/lowercase letter, 1 number & 1 symbol");
+            setError("Password does not meet requirements. At least 1 number is required");
             System.out.println("Failed number requirement");
             return false;
         }
@@ -189,7 +191,7 @@ public class SignUp1Controller extends Application implements Initializable {
         Matcher m = p.matcher(userPassword);
         hasSymbol = m.find();
         if (!hasSymbol) {
-            setError("Password does not meet requirements. At least: 8 characters in length, 1 uppercase/lowercase letter, 1 number & 1 symbol");
+            setError("Password does not meet requirements. At least 1 symbol is required");
             System.out.println("Failed symbol requirement");
             return false;
         }
@@ -220,5 +222,4 @@ public class SignUp1Controller extends Application implements Initializable {
 //    
 //    public static String getUser(){
 //        return loggedInUser;
-//    } 
-//setError("Password does not meet requirements. At least: 1 upper/lowercase letter, 1 number & 1 symbol");
+//    }

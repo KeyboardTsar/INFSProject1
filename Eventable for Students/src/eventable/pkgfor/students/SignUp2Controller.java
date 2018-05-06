@@ -7,6 +7,7 @@ package eventable.pkgfor.students;
 
 import static eventable.pkgfor.students.DBController.closeConnection;
 import static eventable.pkgfor.students.DBController.openConnection;
+import static eventable.pkgfor.students.SignUp1Controller.userEmailAddress;
 import static eventable.pkgfor.students.StudentScreenEvents_FavouritesController.conn;
 import static eventable.pkgfor.students.StudentScreenEvents_FavouritesController.statement;
 import java.io.IOException;
@@ -62,8 +63,6 @@ public class SignUp2Controller extends Application implements Initializable {
 
     public static Statement statement;
 
-    public String userPassword;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
@@ -116,7 +115,7 @@ public class SignUp2Controller extends Application implements Initializable {
             return false;
         }
         statement = openConnection();
-        currentQuery = "UPDATE(email, password) SET zid = '" + zid.getText() + "', " + "SET mobile_number = + '" + mobileNumber.getText() + "', " + "SET first_name = + '" + firstName.getText() + "', " + "SET last_name = '" + lastName.getText() + "'"; ;
+        currentQuery = "UPDATE app_user SET zid = '" + zid.getText() + "', " + "mobile_number = '" + mobileNumber.getText() + "', " + "first_name = '" + firstName.getText() + "', " + "last_name = '" + lastName.getText() + "'" + " WHERE email = '" + SignUp1Controller.userEmailAddress + "'";
         System.out.print(currentQuery);
         int update = statement.executeUpdate(currentQuery);
         return true;

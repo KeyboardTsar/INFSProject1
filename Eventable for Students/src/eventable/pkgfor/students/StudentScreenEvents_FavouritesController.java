@@ -84,22 +84,9 @@ public class StudentScreenEvents_FavouritesController extends Application implem
 
     public static ResultSet rs;
 
-    public static Statement statement;
-
-//    @FXML 
-//    private ImageView home;
-//    
-//    @FXML
-//    private TextField username;
-//    
-//    @FXML
-//    private PasswordField password;
-//    
-//    @FXML
-//    private Text SignInError, InjectionError;
-//    
-//    public static String loggedInUser;
-//
+    public static Statement statement;   
+//  public static String loggedInUser;
+    
     public void populateTableView() throws SQLException {
         String loggedInUser = LoginController.loggedInUser;
         statement = openConnection();
@@ -127,9 +114,9 @@ public class StudentScreenEvents_FavouritesController extends Application implem
             tableofFavouriteSocieties.setFixedCellSize(60.0);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            closeConnection(conn, rs, statement);
-        }
+        }// finally {
+          //  closeConnection(conn, rs, statement);
+        //}
     }
     
     @Override
@@ -202,6 +189,7 @@ public class StudentScreenEvents_FavouritesController extends Application implem
     
     @Override
     public void start(Stage primaryStage) throws Exception {
+        populateTableView();
         stage = (Stage) society.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

@@ -123,9 +123,9 @@ public class StudentScreenEvents_GoingController extends Application implements 
             //tableofEvents.getColumns().setAll(event, startDate, location);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            closeConnection(conn, rs, statement);
-        }
+        } //finally {
+            //closeConnection(conn, rs, statement);
+        //}
 
     }
 
@@ -199,10 +199,12 @@ public class StudentScreenEvents_GoingController extends Application implements 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        populateTableView();
         stage = (Stage) society.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        populateTableView();
     }
     
     //    @FXML

@@ -26,6 +26,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -58,21 +59,21 @@ public class StudentScreenEvents_AllController extends Application implements In
     @FXML
     private Text society;
     @FXML
-    public Text code;
+    private Text code;
     @FXML
-    public Text events;
+    private Text events;
     @FXML
-    public Text feedback;
+    private Text feedback;
     @FXML
-    public Text profile;
+    private Text profile;
     @FXML
-    public Text all;
+    private Text all;
     @FXML
-    public Text favourites;
+    private Text favourites;
     @FXML
-    public Text going;
+    private Text going;
     @FXML
-    public Text past;
+    private Text past;
     @FXML
     public TableView<Events> tableofEvents;
     @FXML
@@ -81,10 +82,6 @@ public class StudentScreenEvents_AllController extends Application implements In
     public TableColumn<Events, String> startDate;
     @FXML
     public TableColumn<Events, String> location;
-    
-    public static String clickedEvent;
-    public static String clickedStartDate;
-    public static String clickedLocation;
 
     Date currentDate;
 
@@ -127,9 +124,9 @@ public class StudentScreenEvents_AllController extends Application implements In
             //tableofEvents.getColumns().setAll(event, startDate, location);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            closeConnection(conn, rs, statement);
-        }
+        } //finally {
+            //closeConnection(conn, rs, statement);
+        //}
 
     }
 
@@ -186,14 +183,6 @@ public class StudentScreenEvents_AllController extends Application implements In
     private void topNavPast(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_Past.fxml");
     }
-    
-    @FXML
-    private void onTableClick(MouseEvent event) throws SQLException {
-//        clickedEvent = tableofEvents.getSelectionModel().getSelectedItem().getEvent();
-//        clickedStartDate =  tableofEvents.getSelectionModel().getSelectedItem().getStartDate();
-//        clickedLocation =  tableofEvents.getSelectionModel().getSelectedItem().getLocation();
-//        loadNext("StudentScreenEvents_SingleEvent.fxml");
-    }
 
     public void loadNext(String destination) {
         stage = (Stage) society.getScene().getWindow();
@@ -211,12 +200,14 @@ public class StudentScreenEvents_AllController extends Application implements In
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        populateTableView();
         stage = (Stage) society.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        populateTableView();
     }
-
+    
     //    @FXML
 //    private void SignInButton(MouseEvent event) throws Exception{
 //        DBController auth = new DBController();
@@ -258,4 +249,5 @@ public class StudentScreenEvents_AllController extends Application implements In
 //    public static String getUser(){
 //        return loggedInUser;
 //    } 
+
 }
