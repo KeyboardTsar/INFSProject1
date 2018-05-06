@@ -112,7 +112,7 @@ public class LoginController implements Initializable {
 
                 //Comparing passwords
                 if (loggedInPasswordHashedString.matches(passwordStoredInDBHashedString)) {
-                    System.out.print("Password correct" + loggedInPasswordHashedString);
+                    System.out.print("Password correct");
                     return true;
                 } else {
                     errorText2.setVisible(true);
