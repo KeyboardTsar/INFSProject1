@@ -50,8 +50,8 @@ public class SignUp3Controller extends Application implements Initializable {
 
     @FXML
     private Button next;
-    private TextField degree, graduationYear;
-    private Text errorText, errorText2;
+    public TextField degree, graduationYear;
+    public Text errorText;
     
     public static Connection conn;
 
@@ -67,21 +67,19 @@ public class SignUp3Controller extends Application implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
         public Boolean validateFields() throws SQLException {
-        errorText.setVisible(false);
-        errorText2.setVisible(false);
-        
+
         if (Utils.extractStringIsEmpty(degree)) {
-            errorText.setVisible(true);
+            setError("Degree cannot be empty");
             return false;
         }
         if (Utils.extractStringIsEmpty(graduationYear)) {
-            errorText2.setVisible(true);
+            setError("Graduation Year cannot be empty");
             return false;
         }
-        statement = openConnection();
-        currentQuery = "UPDATE(email, password) SET degree = '" + degree.getText() + "', " + "SET graduation_year = '" + graduationYear.getText() + "'";
-        System.out.print(currentQuery);
-        int update = statement.executeUpdate(currentQuery);
+//        statement = openConnection();
+//        currentQuery = "UPDATE(email, password) SET degree = '" + degree.getText() + "', " + "SET graduation_year = '" + graduationYear.getText() + "'";
+//        System.out.print(currentQuery);
+//        int update = statement.executeUpdate(currentQuery);
         return true;
     }
     
@@ -89,7 +87,7 @@ public class SignUp3Controller extends Application implements Initializable {
     private void nextButton(ActionEvent event) throws Exception{
         if (validateFields()) {
             System.out.print("Entered nextButton method");
-            closeConnection(conn, rs, statement);
+//            closeConnection(conn, rs, statement);
             loadNext("SignUp4.fxml");
         }
     }
@@ -112,6 +110,11 @@ public class SignUp3Controller extends Application implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+    
+        public void setError(String errorMessage) {
+        errorText.setText(errorMessage);
+        errorText.setVisible(true);
     }
 }
 //    @FXML

@@ -18,6 +18,8 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,16 +44,16 @@ import javax.swing.JOptionPane;
  * @author edhopkins
  */
 public class SignUp2Controller extends Application implements Initializable {
-    
+
     @FXML
     Stage stage;
     Parent root;
 
     @FXML
     private Button next;
-    private TextField firstName, lastName, zid, mobileNumber;
-    private Text errorText, errorText2, errorText3, errorText4;
-    
+    public TextField firstName, lastName, zid, mobileNumber;
+    public Text errorText;
+
     public static Connection conn;
 
     public String currentQuery;
@@ -61,47 +63,72 @@ public class SignUp2Controller extends Application implements Initializable {
     public static Statement statement;
 
     public String userPassword;
-    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
-    
+
     public Boolean validateFields() throws SQLException {
         errorText.setVisible(false);
-        errorText2.setVisible(false);
-        errorText3.setVisible(false);
-        errorText4.setVisible(false);
-        
+
         if (Utils.extractStringIsEmpty(firstName)) {
-            errorText.setVisible(true);
+            setError("First Name cannot be empty");
             return false;
         }
         if (Utils.extractStringIsEmpty(lastName)) {
-            errorText2.setVisible(true);
+            setError("Last Name cannot be empty");
             return false;
         }
         if (Utils.extractStringIsEmpty(zid)) {
-            errorText3.setVisible(true);
+            setError("zID cannot be empty");
             return false;
         }
         if (Utils.extractStringIsEmpty(mobileNumber)) {
-            errorText4.setVisible(true);
+            setError("Mobile Number cannot be empty");
             return false;
         }
-        statement = openConnection();
-        currentQuery = "UPDATE(email, password) SET zid = '" + zid.getText() + "', " + "SET mobile_number = + '" + mobileNumber.getText() + "', " + "SET first_name = + '" + firstName.getText() + "', " + "SET last_name = '" + lastName.getText() + "'"; ;
-        System.out.print(currentQuery);
-        int update = statement.executeUpdate(currentQuery);
+        //Check length of zID is only 7 digits (no Z included)
+        if (zid.getText().length() > 7) {
+            setError("Incorrect zID format (NOTE: please do not enter the z)");
+            return false;
+        }
+        //Check that zID doesn't contain any letters
+        //TODO: fix this
+        Pattern p = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(Utils.extractString(zid));
+        boolean invalidZID = m.find();
+        if(!invalidZID) {
+            setError("Incorrect zID format (NOTE: please do not enter the z)");
+            return false;
+        }
+        //Check length of mobile number is only 10 digits
+        if (!(mobileNumber.getText().length() == 10)) {
+            setError("Invalid Mobile Number");
+            return false;
+        }
+        //Check that mobile number doesn't contain any letters
+        //TODO: fix this
+        Pattern p1 = Pattern.compile("[^a-z]", Pattern.CASE_INSENSITIVE);
+        Matcher m1 = p1.matcher(Utils.extractString(mobileNumber));
+        boolean invalidMobile = m1.find();
+        if(!invalidMobile) {
+            setError("Invalid Mobile Number");
+            return false;
+        }
+//        statement = openConnection();
+//        currentQuery = "UPDATE(email, password) SET zid = '" + zid.getText() + "', " + "SET mobile_number = + '" + mobileNumber.getText() + "', " + "SET first_name = + '" + firstName.getText() + "', " + "SET last_name = '" + lastName.getText() + "'"; ;
+//        System.out.print(currentQuery);
+//        int update = statement.executeUpdate(currentQuery);
         return true;
     }
-       
+
     @FXML
     private void nextButton(ActionEvent event) throws SQLException {
         if (validateFields()) {
             System.out.print("Entered nextButton method");
-            closeConnection(conn, rs, statement);
+//            closeConnection(conn, rs, statement);
             loadNext("SignUp3.fxml");
-    }
+        }
     }
 
     public void loadNext(String destination) {
@@ -122,6 +149,11 @@ public class SignUp2Controller extends Application implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void setError(String errorMessage) {
+        errorText.setText(errorMessage);
+        errorText.setVisible(true);
     }
 }
 //    @FXML
