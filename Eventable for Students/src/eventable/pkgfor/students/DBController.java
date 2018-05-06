@@ -24,7 +24,7 @@ public class DBController {
                 Logger.getLogger(DBController.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
-                conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","hr","hr");
+                conn = DriverManager.getConnection("jdbc:oracle:thin:@sage.business.unsw.edu.au:1521:orcl01","Y17GROUP214","zanyheart47");
                 statement = conn.createStatement();
             }
             catch (SQLException ex) {
