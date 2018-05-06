@@ -81,30 +81,20 @@ public class SignUp1Controller extends Application implements Initializable {
             return false;
         }
         if (Utils.extractStringIsEmpty(password)) {
-            errorText.setVisible(false);
             errorText2.setVisible(true);
             return false;
         }
         if (Utils.extractStringIsEmpty(confirmPassword)) {
-            errorText.setVisible(false);
-            errorText2.setVisible(false);
             errorText3.setVisible(true);
             return false;
         }
         if (!confirmPassword.getText().equals(password.getText())) {
-            errorText.setVisible(false);
-            errorText2.setVisible(false);
-            errorText3.setVisible(false);
             errorText4.setVisible(true);
             return false;
         } else {
             userPassword = password.getText();
             //Check password length
             if (userPassword.length() < 8) {
-                errorText.setVisible(false);
-                errorText2.setVisible(false);
-                errorText3.setVisible(false);
-                errorText4.setVisible(false);
                 errorText5.setVisible(true);
                 return false;
             }
@@ -113,11 +103,6 @@ public class SignUp1Controller extends Application implements Initializable {
                 for (int i = 1; i < userPassword.length(); i++) {
                     ch = userPassword.charAt(i);
                     if (!Character.isLowerCase(ch)) {
-                        errorText.setVisible(false);
-                        errorText2.setVisible(false);
-                        errorText3.setVisible(false);
-                        errorText4.setVisible(false);
-                        errorText5.setVisible(false);
                         errorText6.setVisible(true);
                         return false;
                     }
@@ -128,12 +113,6 @@ public class SignUp1Controller extends Application implements Initializable {
                 for (int i = 1; i < userPassword.length(); i++) {
                     ch = userPassword.charAt(i);
                     if (!Character.isUpperCase(ch)) {
-                        errorText.setVisible(false);
-                        errorText2.setVisible(false);
-                        errorText3.setVisible(false);
-                        errorText4.setVisible(false);
-                        errorText5.setVisible(false);
-                        errorText6.setVisible(false);
                         errorText7.setVisible(true);
                         return false;
                     }
@@ -142,27 +121,12 @@ public class SignUp1Controller extends Application implements Initializable {
             //Check if password contains number
             String patternNumber = "(?=.*[0-9])";
             if (!userPassword.matches(patternNumber)) {
-                errorText.setVisible(false);
-                errorText2.setVisible(false);
-                errorText3.setVisible(false);
-                errorText4.setVisible(false);
-                errorText5.setVisible(false);
-                errorText6.setVisible(false);
-                errorText7.setVisible(false);
                 errorText8.setVisible(true);
                 return false;
             }
             //Check if password contains special character
             String patternSpecialCharacter = "(?=.*[@#$%^&+=])";
             if (!userPassword.matches(patternSpecialCharacter)) {
-                errorText.setVisible(false);
-                errorText2.setVisible(false);
-                errorText3.setVisible(false);
-                errorText4.setVisible(false);
-                errorText5.setVisible(false);
-                errorText6.setVisible(false);
-                errorText7.setVisible(false);
-                errorText8.setVisible(false);
                 errorText9.setVisible(true);
                 return false;
             }
