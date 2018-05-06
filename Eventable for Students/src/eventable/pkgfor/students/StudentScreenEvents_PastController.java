@@ -10,6 +10,7 @@ import static eventable.pkgfor.students.DBController.openConnection;
 import static eventable.pkgfor.students.LoginController.conn;
 import static eventable.pkgfor.students.LoginController.rs;
 import static eventable.pkgfor.students.LoginController.statement;
+import static eventable.pkgfor.students.LoginController.userInSystem;
 import static eventable.pkgfor.students.StudentScreenEvents_AllController.conn;
 import static eventable.pkgfor.students.StudentScreenEvents_AllController.statement;
 import java.io.IOException;
@@ -148,7 +149,9 @@ public class StudentScreenEvents_PastController extends Application implements I
 
     @FXML
     private void bottomNavCodeButton(MouseEvent event) throws SQLException {
-        loadNext("StudentScreenCode.fxml");
+        if (userInSystem) {
+            loadNext("StudentScreenCode.fxml");
+        }
     }
 
     @FXML
@@ -158,12 +161,16 @@ public class StudentScreenEvents_PastController extends Application implements I
 
     @FXML
     private void bottomNavFeedbackButton(MouseEvent event) throws SQLException {
-        loadNext("StudentScreenFeedback_Feedback.fxml");
+        if (userInSystem) {
+            loadNext("StudentScreenFeedback_Feedback.fxml");
+        }
     }
 
     @FXML
     private void bottomNavProfileButton(MouseEvent event) throws SQLException {
-        loadNext("StudentScreenProfile.fxml");
+        if (userInSystem) {
+            loadNext("StudentScreenProfile.fxml");
+        }
     }
 
     @FXML

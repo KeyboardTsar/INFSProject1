@@ -10,6 +10,7 @@ import static eventable.pkgfor.students.DBController.openConnection;
 import static eventable.pkgfor.students.LoginController.conn;
 import static eventable.pkgfor.students.LoginController.rs;
 import static eventable.pkgfor.students.LoginController.statement;
+import static eventable.pkgfor.students.LoginController.userInSystem;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -70,13 +71,15 @@ public class StudentScreenEvents_FavouritesController extends Application implem
     @FXML
     private Text past;
     @FXML
-    public TableView<FavouriteSocieties> tableofFavouriteSocieties;
+    public TableView<Events> tableofEventsFavourites;
     @FXML
-    public TableColumn<FavouriteSocieties, String> societyName;
+    public TableColumn<Events, String> event;
     @FXML
-    public TableColumn<FavouriteSocieties, String> societyDescription;
+    public TableColumn<Events, String> startDate;
+    @FXML
+    public TableColumn<Events, String> location;
 
-    ObservableList<FavouriteSocieties> societyData;
+    ObservableList<Events> eventsData;
 
     public static Connection conn;
 
@@ -90,19 +93,20 @@ public class StudentScreenEvents_FavouritesController extends Application implem
     public void populateTableView() throws SQLException {
         String loggedInUser = LoginController.loggedInUser;
         statement = openConnection();
-        currentQuery = "SELECT society_name, society_description FROM society JOIN favourites f USING (society_id) WHERE f.email = '"+ loggedInUser + "'";
+        currentQuery = "SELECT event_title, CAST(TO_CHAR(event_start, 'dd/MON/yy') AS VARCHAR2(50)), location_type from event JOIN favourites f USING (society_id) WHERE f.email = '"+ loggedInUser + "'";
         ResultSet rs = statement.executeQuery(currentQuery);
 
-        societyName.setCellValueFactory(new PropertyValueFactory<>("societyName"));
-        societyDescription.setCellValueFactory(new PropertyValueFactory<>("societyDescription"));
+        event.setCellValueFactory(new PropertyValueFactory<>("event"));
+        startDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        location.setCellValueFactory(new PropertyValueFactory<>("location"));
 
         //Data added to observable List
-        societyData = FXCollections.observableArrayList();
+        eventsData = FXCollections.observableArrayList();
         
         try {
             while (rs.next()) {
                 int i = 1;
-                societyData.add(new FavouriteSocieties(rs.getString(i), rs.getString(i + 1)));
+                eventsData.add(new Events(rs.getString(i), rs.getString(i + 1), rs.getString(i+2)));
             }
         } catch (SQLException ex) {
             Logger.getLogger(StudentScreenEvents_FavouritesController.class.getName()).log(Level.SEVERE, null, ex);
@@ -110,8 +114,7 @@ public class StudentScreenEvents_FavouritesController extends Application implem
         
         //Data added to TableView
         try {
-            tableofFavouriteSocieties.setItems(societyData);
-            tableofFavouriteSocieties.setFixedCellSize(60.0);
+            tableofEventsFavourites.setItems(eventsData);
         } catch (Exception e) {
             e.printStackTrace();
         }// finally {
@@ -135,7 +138,9 @@ public class StudentScreenEvents_FavouritesController extends Application implem
 
     @FXML
     private void bottomNavCodeButton(MouseEvent event) throws SQLException {
-        loadNext("StudentScreenCode.fxml");
+        if (userInSystem) {
+            loadNext("StudentScreenCode.fxml");
+        }
     }
 
     @FXML
@@ -145,12 +150,16 @@ public class StudentScreenEvents_FavouritesController extends Application implem
 
     @FXML
     private void bottomNavFeedbackButton(MouseEvent event) throws SQLException {
-        loadNext("StudentScreenFeedback_Feedback.fxml");
+        if (userInSystem) {
+            loadNext("StudentScreenFeedback_Feedback.fxml");
+        }
     }
 
     @FXML
     private void bottomNavProfileButton(MouseEvent event) throws SQLException {
-        loadNext("StudentScreenProfile.fxml");
+        if (userInSystem) {
+            loadNext("StudentScreenProfile.fxml");
+        }
     }
 
     @FXML

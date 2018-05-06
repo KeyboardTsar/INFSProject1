@@ -10,6 +10,7 @@ import static eventable.pkgfor.students.DBController.openConnection;
 import static eventable.pkgfor.students.LoginController.conn;
 import static eventable.pkgfor.students.LoginController.rs;
 import static eventable.pkgfor.students.LoginController.statement;
+import static eventable.pkgfor.students.LoginController.userInSystem;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -45,11 +46,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-/**
- * FXML Controller class
- *
- * @author AriSurfacePro
- */
 public class StudentScreenEvents_GoingController extends Application implements Initializable {
 
     @FXML
@@ -145,7 +141,9 @@ public class StudentScreenEvents_GoingController extends Application implements 
 
     @FXML
     private void bottomNavCodeButton(MouseEvent event) throws SQLException {
-        loadNext("StudentScreenCode.fxml");
+        if (userInSystem) {
+            loadNext("StudentScreenCode.fxml");
+        }
     }
 
     @FXML
@@ -155,12 +153,16 @@ public class StudentScreenEvents_GoingController extends Application implements 
 
     @FXML
     private void bottomNavFeedbackButton(MouseEvent event) throws SQLException {
-        loadNext("StudentScreenFeedback_Feedback.fxml");
+        if (userInSystem) {
+            loadNext("StudentScreenFeedback_Feedback.fxml");
+        }
     }
 
     @FXML
     private void bottomNavProfileButton(MouseEvent event) throws SQLException {
-        loadNext("StudentScreenProfile.fxml");
+        if (userInSystem) {
+            loadNext("StudentScreenProfile.fxml");
+        }
     }
 
     @FXML

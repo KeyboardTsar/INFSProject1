@@ -67,6 +67,8 @@ public class LoginController implements Initializable {
     public static Statement statement;
     
     public static String loggedInUser;
+    
+    public static Boolean userInSystem;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -125,19 +127,22 @@ public class LoginController implements Initializable {
     private void loginButton(ActionEvent event) throws Exception {
        errorText.setVisible(false);
        errorText2.setVisible(false);
+       userInSystem = true;
         //Checks if password is correct
             if (authenticate()) {
-                closeConnection(conn, rs, statement);
-                //loadNext("StudentScreenEvents_All.fxml");
+//                closeConnection(conn, rs, statement);
+                loadNext("StudentScreenEvents_All.fxml");
                 //loadNext("StudentScreenEvents_Favourites.fxml");
                // loadNext("StudentScreenEvents_Going.fxml");
-             //  loadNext("StudentScreenEvents_Past.fxml");
-                loadNext("SignUp2.fxml");
+//                loadNext("StudentScreenEvents_Past.fxml");
+                //loadNext("SignUp3.fxml");
+               // loadNext("ForgetPassword1.fxml");
+                //loadNext("SignUp1.fxml");
             }
         }
     
     private void forgotPassword(MouseEvent event) {
-        loadNext("StudentScreenProfile.fxml"); //Need to fix navigation with correct .fxml file
+        loadNext("ForgotPassword1.fxml");
     }
     
     public void loadNext(String destination) {

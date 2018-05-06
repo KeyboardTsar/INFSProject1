@@ -18,7 +18,7 @@
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#039be5" height="44.0" layoutX="-2.0" stroke="#ffffff00" strokeType="INSIDE" width="338.0" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#006db3" height="53.0" layoutY="549.0" stroke="#ffffff00" strokeType="INSIDE" width="338.0" />
-            <Ellipse fill="DODGERBLUE" layoutX="169.0" layoutY="568.0" radiusX="34.0" radiusY="34.0" stroke="#039be500" strokeType="INSIDE" />
+            <Ellipse fill="DODGERBLUE" layoutX="37.0" layoutY="568.0" radiusX="34.0" radiusY="34.0" stroke="#039be500" strokeType="INSIDE" />
             <Text fx:id="society" fill="WHITE" layoutX="15.0" layoutY="581.0" onMouseClicked="#bottomNavSocietyButton" strokeType="OUTSIDE" strokeWidth="0.0" text="Societies" />
             <Text fx:id="code" fill="WHITE" layoutX="82.0" layoutY="581.0" onMouseClicked="#bottomNavCodeButton" strokeType="OUTSIDE" strokeWidth="0.0" text="Code" />
             <Text fx:id="events" fill="WHITE" layoutX="149.0" layoutY="581.0" onMouseClicked="#bottomNavEventsButton" strokeType="OUTSIDE" strokeWidth="0.0" text="Events" />
@@ -42,10 +42,10 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="517.0" prefWidth="338.0">
                <children>
                   <TextField layoutX="26.0" layoutY="12.0" prefHeight="32.0" prefWidth="282.0" promptText="Search" />
-                  <TableView layoutX="26.0" layoutY="60.0" prefHeight="449.0" prefWidth="283.0">
+                  <TableView fx:id="tableOfSocieties" layoutX="26.0" layoutY="60.0" prefHeight="449.0" prefWidth="283.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
+                      <TableColumn fx:id="societyName" prefWidth="75.0" text="Society Name" />
+                      <TableColumn fx:id="societyDescription" prefWidth="207.0" text="Society Description" />
                     </columns>
                   </TableView>
                </children>
