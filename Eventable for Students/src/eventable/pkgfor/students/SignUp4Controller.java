@@ -100,6 +100,7 @@ public class SignUp4Controller implements Initializable {
             setError("Please answer your security questions");
             return false;
         }
+        //TODO: Fix this DB Code
 //        statement = openConnection();
 //        currentQuery = "UPDATE(email, password) SET degree = '" + degree.getText() + "', " + "SET graduation_year = '" + graduationYear.getText() + "'";
 //        System.out.print(currentQuery);

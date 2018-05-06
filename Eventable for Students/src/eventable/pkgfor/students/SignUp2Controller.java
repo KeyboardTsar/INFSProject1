@@ -115,10 +115,10 @@ public class SignUp2Controller extends Application implements Initializable {
             setError("Invalid Mobile Number");
             return false;
         }
-//        statement = openConnection();
-//        currentQuery = "UPDATE(email, password) SET zid = '" + zid.getText() + "', " + "SET mobile_number = + '" + mobileNumber.getText() + "', " + "SET first_name = + '" + firstName.getText() + "', " + "SET last_name = '" + lastName.getText() + "'"; ;
-//        System.out.print(currentQuery);
-//        int update = statement.executeUpdate(currentQuery);
+        statement = openConnection();
+        currentQuery = "UPDATE(email, password) SET zid = '" + zid.getText() + "', " + "SET mobile_number = + '" + mobileNumber.getText() + "', " + "SET first_name = + '" + firstName.getText() + "', " + "SET last_name = '" + lastName.getText() + "'"; ;
+        System.out.print(currentQuery);
+        int update = statement.executeUpdate(currentQuery);
         return true;
     }
 
@@ -126,7 +126,7 @@ public class SignUp2Controller extends Application implements Initializable {
     private void nextButton(ActionEvent event) throws SQLException {
         if (validateFields()) {
             System.out.print("Entered nextButton method");
-//            closeConnection(conn, rs, statement);
+            closeConnection(conn, rs, statement);
             loadNext("SignUp3.fxml");
         }
     }

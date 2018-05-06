@@ -76,10 +76,10 @@ public class SignUp3Controller extends Application implements Initializable {
             setError("Graduation Year cannot be empty");
             return false;
         }
-//        statement = openConnection();
-//        currentQuery = "UPDATE(email, password) SET degree = '" + degree.getText() + "', " + "SET graduation_year = '" + graduationYear.getText() + "'";
-//        System.out.print(currentQuery);
-//        int update = statement.executeUpdate(currentQuery);
+        statement = openConnection();
+        currentQuery = "UPDATE(email, password) SET degree = '" + degree.getText() + "', " + "SET graduation_year = '" + graduationYear.getText() + "'";
+        System.out.print(currentQuery);
+        int update = statement.executeUpdate(currentQuery);
         return true;
     }
     
@@ -87,7 +87,7 @@ public class SignUp3Controller extends Application implements Initializable {
     private void nextButton(ActionEvent event) throws Exception{
         if (validateFields()) {
             System.out.print("Entered nextButton method");
-//            closeConnection(conn, rs, statement);
+            closeConnection(conn, rs, statement);
             loadNext("SignUp4.fxml");
         }
     }

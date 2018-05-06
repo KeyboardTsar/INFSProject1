@@ -90,11 +90,11 @@ public class SignUp1Controller extends Application implements Initializable {
             return false;
         }
         //Inputting details into database
-//        int userPasswordHashed = userPassword.hashCode();
-//        String userPasswordHashedString = userPasswordHashed + "";
-//        statement = openConnection();
-//        currentQuery = "INSERT INTO APP_USER(email, password) VALUES('" + email.getText() + "', '" + userPasswordHashedString + "')";
-//        int update = statement.executeUpdate(currentQuery);
+        int userPasswordHashed = userPassword.hashCode();
+        String userPasswordHashedString = userPasswordHashed + "";
+        statement = openConnection();
+        currentQuery = "INSERT INTO APP_USER(email, password) VALUES('" + email.getText() + "', '" + userPasswordHashedString + "')";
+        int update = statement.executeUpdate(currentQuery);
         return true;
     }
 
@@ -102,7 +102,7 @@ public class SignUp1Controller extends Application implements Initializable {
     private void nextButton(ActionEvent event) throws SQLException {
         if (validateRegistration()) {
             System.out.print("Entered nextButton method");
-//            closeConnection(conn, rs, statement);
+            closeConnection(conn, rs, statement);
             loadNext("SignUp2.fxml");
         }
     }
