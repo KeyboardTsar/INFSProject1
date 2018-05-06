@@ -57,14 +57,14 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="512.0" prefWidth="338.0">
                <children>
                   <TextField layoutX="28.0" layoutY="14.0" prefHeight="32.0" prefWidth="282.0" promptText="Search" />
-                  <TableView layoutX="26.0" layoutY="103.0" prefHeight="398.0" prefWidth="283.0">
+                  <TableView fx:id="tableofFavouriteSocieties" layoutX="26.0" layoutY="103.0" prefHeight="398.0" prefWidth="283.0">
                      <columns>
-                        <TableColumn fx:id="societyName" prefWidth="70.0" text="Society" />
-                        <TableColumn fx:id="societyDescription" prefWidth="220.0" text="Description" />
+                        <TableColumn fx:id="societyName" prefWidth="100.0" text="Society"/>
+                        <TableColumn fx:id="societyDescription" prefWidth="200.0" resizable="true" text="Description" />
                      </columns>
                   </TableView>
                   <Accordion layoutX="77.0" layoutY="83.0" />
-                <TitledPane animated="false" expanded="false" layoutX="27.0" layoutY="59.0" prefHeight="119.0" prefWidth="282.0" text="Filters">
+                <TitledPane animated="false" expanded="false" layoutX="27.0" layoutY="59.0" maxHeight="-Infinity" prefHeight="398.0" prefWidth="282.0" text="Filters">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>

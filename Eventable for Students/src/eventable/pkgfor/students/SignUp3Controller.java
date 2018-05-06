@@ -5,12 +5,21 @@
  */
 package eventable.pkgfor.students;
 
-
+import static eventable.pkgfor.students.DBController.closeConnection;
+import static eventable.pkgfor.students.DBController.openConnection;
+import static eventable.pkgfor.students.SignUp2Controller.statement;
+import static eventable.pkgfor.students.StudentScreenEvents_FavouritesController.conn;
+import static eventable.pkgfor.students.StudentScreenEvents_FavouritesController.statement;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,12 +36,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author edhopkins
  */
-public class SignUp3Controller implements Initializable {
+public class SignUp3Controller extends Application implements Initializable {
     
     @FXML
     Stage stage;
@@ -40,33 +50,48 @@ public class SignUp3Controller implements Initializable {
 
     @FXML
     private Button next;
+    private TextField degree, graduationYear;
+    private Text errorText, errorText2;
     
-//    @FXML 
-//    private ImageView home;
-//    
-//    @FXML
-//    private TextField username;
-//    
-//    @FXML
-//    private PasswordField password;
-//    
-//    @FXML
-//    private Text SignInError, InjectionError;
-//    
-//    public static String loggedInUser;
-//
-//    DBController d = new DBController(); //Establish a connection to the db
+    public static Connection conn;
 
+    public String currentQuery;
+
+    public static ResultSet rs;
+
+    public static Statement statement;
+
+    public String userPassword;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    }
+        public Boolean validateFields() throws SQLException {
+        errorText.setVisible(false);
+        errorText2.setVisible(false);
         
-        
-    } 
+        if (Utils.extractStringIsEmpty(degree)) {
+            errorText.setVisible(true);
+            return false;
+        }
+        if (Utils.extractStringIsEmpty(graduationYear)) {
+            errorText2.setVisible(true);
+            return false;
+        }
+        statement = openConnection();
+        currentQuery = "UPDATE(email, password) SET degree = '" + degree.getText() + "', " + "SET graduation_year = '" + graduationYear.getText() + "'";
+        System.out.print(currentQuery);
+        int update = statement.executeUpdate(currentQuery);
+        return true;
+    }
     
     @FXML
     private void nextButton(ActionEvent event) throws Exception{
-        loadNext("SignUp4.fxml"); 
+        if (validateFields()) {
+            System.out.print("Entered nextButton method");
+            closeConnection(conn, rs, statement);
+            loadNext("SignUp4.fxml");
+        }
     }
     
     public void loadNext(String destination){
@@ -81,6 +106,14 @@ public class SignUp3Controller implements Initializable {
         stage.show();
     }
     
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        stage = (Stage) next.getScene().getWindow(); //NEED TO FIX UP LINE
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+}
 //    @FXML
 //    private void SignInButton(ActionEvent event) throws Exception{
 //        DBController auth = new DBController();
@@ -122,4 +155,3 @@ public class SignUp3Controller implements Initializable {
 //    public static String getUser(){
 //        return loggedInUser;
 //    } 
-}

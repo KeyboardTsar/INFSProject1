@@ -129,15 +129,17 @@ public class LoginController implements Initializable {
             if (authenticate()) {
                 closeConnection(conn, rs, statement);
                 //loadNext("StudentScreenEvents_All.fxml");
-                loadNext("StudentScreenEvents_Favourites.fxml");
+                //loadNext("StudentScreenEvents_Favourites.fxml");
                // loadNext("StudentScreenEvents_Going.fxml");
+             //  loadNext("StudentScreenEvents_Past.fxml");
+                loadNext("SignUp2.fxml");
             }
         }
     
     private void forgotPassword(MouseEvent event) {
         loadNext("StudentScreenProfile.fxml"); //Need to fix navigation with correct .fxml file
     }
-
+    
     public void loadNext(String destination) {
         stage = (Stage) loginButton.getScene().getWindow();
         try {

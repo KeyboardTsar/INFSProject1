@@ -4,7 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/AriSurfacePro/Documents/University/Information%20Systems/3rd%20Year/INFS3611/Assignment/Group%20Assignment/INFSProject1/Eventable%20for%20Students/src/eventable/pkgfor/students/EventableForStudents.java</file>
+            <file>file:/C:/Users/AriSurfacePro/Documents/University/Information%20Systems/3rd%20Year/INFS3611/Assignment/Group%20Assignment/INFSProject1/Eventable%20for%20Students/src/eventable/pkgfor/students/Events.java</file>
+            <file>file:/C:/Users/AriSurfacePro/Documents/University/Information%20Systems/3rd%20Year/INFS3611/Assignment/Group%20Assignment/INFSProject1/Eventable%20for%20Students/src/eventable/pkgfor/students/LoginController.java</file>
+            <file>file:/C:/Users/AriSurfacePro/Documents/University/Information%20Systems/3rd%20Year/INFS3611/Assignment/Group%20Assignment/INFSProject1/Eventable%20for%20Students/src/eventable/pkgfor/students/StudentScreenEvent_SingleEventController.java</file>
+            <file>file:/C:/Users/AriSurfacePro/Documents/University/Information%20Systems/3rd%20Year/INFS3611/Assignment/Group%20Assignment/INFSProject1/Eventable%20for%20Students/src/eventable/pkgfor/students/FavouriteSocieties.java</file>
             <file>file:/C:/Users/AriSurfacePro/Documents/University/Information%20Systems/3rd%20Year/INFS3611/Assignment/Group%20Assignment/INFSProject1/Eventable%20for%20Students/src/eventable/pkgfor/students/StudentScreenEvents_AllController.java</file>
+            <file>file:/C:/Users/AriSurfacePro/Documents/University/Information%20Systems/3rd%20Year/INFS3611/Assignment/Group%20Assignment/INFSProject1/Eventable%20for%20Students/src/eventable/pkgfor/students/StudentScreenEvents_FavouritesController.java</file>
+            <file>file:/C:/Users/AriSurfacePro/Documents/University/Information%20Systems/3rd%20Year/INFS3611/Assignment/Group%20Assignment/INFSProject1/Eventable%20for%20Students/src/eventable/pkgfor/students/StudentScreenEvents_GoingController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -5,11 +5,20 @@
  */
 package eventable.pkgfor.students;
 
+import static eventable.pkgfor.students.DBController.closeConnection;
+import static eventable.pkgfor.students.DBController.openConnection;
+import static eventable.pkgfor.students.StudentScreenEvents_FavouritesController.conn;
+import static eventable.pkgfor.students.StudentScreenEvents_FavouritesController.statement;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,78 +37,158 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author edhopkins
- */
-public class SignUp1Controller implements Initializable {
+public class SignUp1Controller extends Application implements Initializable {
 
     @FXML
     Stage stage;
     Parent root;
-
+    
     @FXML
     private Button next;
-    private TextField email;
-    private TextField password;
-    private TextField confirmPassword;
+    private TextField password, confirmPassword;
+    public TextField email;
+    private Text errorText, errorText2, errorText3, errorText4, errorText5, errorText6, errorText7, errorText8, errorText9;
 
-//    @FXML 
-//    private ImageView home;
-//    
-//    @FXML
-//    private TextField username;
-//    
-//    @FXML
-//    private PasswordField password;
-//    
-//    @FXML
-//    private Text SignInError, InjectionError;
-//    
-//    public static String loggedInUser;
-//
-//    DBController d = new DBController(); //Establish a connection to the db
+    char ch;
+    
+    public static Connection conn;
+
+    public String currentQuery;
+
+    public static ResultSet rs;
+
+    public static Statement statement;
+
+    public String userPassword;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 
+    public Boolean validatePassword() throws SQLException {
+        errorText.setVisible(false);
+        errorText2.setVisible(false);
+        errorText3.setVisible(false);
+        errorText4.setVisible(false);
+        errorText5.setVisible(false);
+        errorText6.setVisible(false);
+        errorText7.setVisible(false);
+        errorText8.setVisible(false);
+        errorText9.setVisible(false);
+
+        if (Utils.extractStringIsEmpty(email)) {
+            errorText.setVisible(true);
+            return false;
+        }
+        if (Utils.extractStringIsEmpty(password)) {
+            errorText.setVisible(false);
+            errorText2.setVisible(true);
+            return false;
+        }
+        if (Utils.extractStringIsEmpty(confirmPassword)) {
+            errorText.setVisible(false);
+            errorText2.setVisible(false);
+            errorText3.setVisible(true);
+            return false;
+        }
+        if (!confirmPassword.getText().equals(password.getText())) {
+            errorText.setVisible(false);
+            errorText2.setVisible(false);
+            errorText3.setVisible(false);
+            errorText4.setVisible(true);
+            return false;
+        } else {
+            userPassword = password.getText();
+            //Check password length
+            if (userPassword.length() < 8) {
+                errorText.setVisible(false);
+                errorText2.setVisible(false);
+                errorText3.setVisible(false);
+                errorText4.setVisible(false);
+                errorText5.setVisible(true);
+                return false;
+            }
+            //Check lowerCase;
+            if (!(Character.isLowerCase(ch))) {
+                for (int i = 1; i < userPassword.length(); i++) {
+                    ch = userPassword.charAt(i);
+                    if (!Character.isLowerCase(ch)) {
+                        errorText.setVisible(false);
+                        errorText2.setVisible(false);
+                        errorText3.setVisible(false);
+                        errorText4.setVisible(false);
+                        errorText5.setVisible(false);
+                        errorText6.setVisible(true);
+                        return false;
+                    }
+                }
+            }
+            //Check upperCase:
+            if (!(Character.isUpperCase(ch))) {
+                for (int i = 1; i < userPassword.length(); i++) {
+                    ch = userPassword.charAt(i);
+                    if (!Character.isUpperCase(ch)) {
+                        errorText.setVisible(false);
+                        errorText2.setVisible(false);
+                        errorText3.setVisible(false);
+                        errorText4.setVisible(false);
+                        errorText5.setVisible(false);
+                        errorText6.setVisible(false);
+                        errorText7.setVisible(true);
+                        return false;
+                    }
+                }
+            }
+            //Check if password contains number
+            String patternNumber = "(?=.*[0-9])";
+            if (!userPassword.matches(patternNumber)) {
+                errorText.setVisible(false);
+                errorText2.setVisible(false);
+                errorText3.setVisible(false);
+                errorText4.setVisible(false);
+                errorText5.setVisible(false);
+                errorText6.setVisible(false);
+                errorText7.setVisible(false);
+                errorText8.setVisible(true);
+                return false;
+            }
+            //Check if password contains special character
+            String patternSpecialCharacter = "(?=.*[@#$%^&+=])";
+            if (!userPassword.matches(patternSpecialCharacter)) {
+                errorText.setVisible(false);
+                errorText2.setVisible(false);
+                errorText3.setVisible(false);
+                errorText4.setVisible(false);
+                errorText5.setVisible(false);
+                errorText6.setVisible(false);
+                errorText7.setVisible(false);
+                errorText8.setVisible(false);
+                errorText9.setVisible(true);
+                return false;
+            }
+        }
+        //Inputting details into database
+        int userPasswordHashed = userPassword.hashCode();
+        String userPasswordHashedString = userPasswordHashed + "";
+        statement = openConnection();
+        currentQuery = "INSERT INTO APP_USER(email, password) VALUES('" + email.getText() + "', '" + userPasswordHashedString + "'";
+        int update = statement.executeUpdate(currentQuery);
+        return true;
+    }
+    
     @FXML
-    private void nextButton(ActionEvent event) throws Exception {
-//        //Check if there are empty fields
-//        if (Utils.extractStringIsEmpty(email)) {
-//            //TODO: Alert the user to some error (there is an empty field that is required...)
-//            
-//            //Error is found. Aborts the rest of the code execution
-//            return;
-//        }
-//        if (Utils.extractStringIsEmpty(password)) {
-//            //TODO: Alert the user to some error (there is an empty field that is required...)
-//            
-//            //Error is found. Aborts the rest of the code execution
-//            return;
-//        }
-//        if (Utils.extractStringIsEmpty(confirmPassword)) {
-//            //TODO: Alert the user to some error (there is an empty field that is required...)
-//            
-//            //Error is found. Aborts the rest of the code execution
-//            return;
-//        }
-//        
-//        //Check if the inputted passwords match
-//        if (Utils.extractString(password).hashCode() != Utils.extractString(confirmPassword).hashCode()) {
-//            //TODO: Alert the user to some error (the passwords entered do not match)
-//
-//            //Error is found. Aborts the rest of the code execution
-//            return;
-//        }
-            loadNext("SignUp2.fxml");
+    private void nextButton(ActionEvent event) throws SQLException {
+        if (validatePassword()) {
+            System.out.print("Entered nextButton method");
+        closeConnection(conn, rs, statement);
+        loadNext("SignUp2.fxml");
+    }
     }
 
     public void loadNext(String destination) {
         stage = (Stage) next.getScene().getWindow();
         try {
-            root = FXMLLoader.load(getClass().getResource(destination)); //putting it to 'Seek a Ride' for now, before we know what type of user each person is
+            root = FXMLLoader.load(getClass().getResource(destination));
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -108,29 +197,21 @@ public class SignUp1Controller implements Initializable {
         stage.show();
     }
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        stage = (Stage) next.getScene().getWindow(); //NEED TO FIX UP LINE
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+}
+
 //    @FXML
 //    private void SignInButton(ActionEvent event) throws Exception{
 //        DBController auth = new DBController();
 //        SignInError.setVisible(false);
 //        InjectionError.setVisible(false);
 //        
-//        if (auth.sanitise(username.getText(), password.getText())){
-//            //InjectionError.setVisible(false);
-//                if (auth.authenticate(username.getText(), password.getText())){
-//                    loggedInUser = username.getText();
-//                    //userType = Integer.parseInt(d.returnSingleQuery("SELECT USERTYPE FROM USER WHERE USERNAME LIKE '" + loggedInUser + "'"));
-//                    loadNext("Seek a Ride.fxml"); //Change this to the main report page
-//
-//                }
-//                else {
-//                    SignInError.setVisible(true);
-//                }
-//        }
-//        else {
-//            InjectionError.setVisible(true);
-//        }
-//
-//    }
 //    
 //    //Saves duplicates
 //    public void loadNext(String destination){
@@ -149,4 +230,3 @@ public class SignUp1Controller implements Initializable {
 //    public static String getUser(){
 //        return loggedInUser;
 //    } 
-}

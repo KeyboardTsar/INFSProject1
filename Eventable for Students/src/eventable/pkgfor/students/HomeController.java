@@ -59,14 +59,12 @@ public class HomeController implements Initializable {
 
     
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        
-        
-    } 
+    public void initialize(URL location, ResourceBundle resources) {   
+    }
     
     @FXML
     private void SignUpButton(ActionEvent event) throws Exception{
-        loadNext("SignUp1.fxml"); 
+        loadNext("SignUp1.fxml");
     }
     
     @FXML
@@ -82,7 +80,7 @@ public class HomeController implements Initializable {
     public void loadNext(String destination){
         stage=(Stage) signUp.getScene().getWindow();
         try {
-            root = FXMLLoader.load(getClass().getResource(destination)); //putting it to 'Seek a Ride' for now, before we know what type of user each person is
+            root = FXMLLoader.load(getClass().getResource(destination));
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }

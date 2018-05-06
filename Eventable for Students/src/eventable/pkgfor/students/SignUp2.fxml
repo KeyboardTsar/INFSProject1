@@ -42,7 +42,7 @@
                   <Font name="Helvetica Neue" size="14.0" />
                </font>
             </TextField>
-            <Text fill="WHITE" layoutX="719.0" layoutY="617.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FIRST NAME">
+            <Text fx:id="firstName" fill="WHITE" layoutX="719.0" layoutY="617.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FIRST NAME">
                <font>
                   <Font name="Helvetica Neue" size="14.0" />
                </font>
@@ -52,7 +52,7 @@
                   <Font name="Helvetica Neue" size="14.0" />
                </font>
             </TextField>
-            <Text fill="WHITE" layoutX="717.0" layoutY="694.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LAST NAME">
+            <Text fx:id="lastName" fill="WHITE" layoutX="717.0" layoutY="694.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LAST NAME">
                <font>
                   <Font name="Helvetica Neue" size="14.0" />
                </font>
@@ -67,7 +67,7 @@
                   <Font name="Helvetica Neue" size="14.0" />
                </font>
             </TextField>
-            <Text fill="WHITE" layoutX="717.0" layoutY="771.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ZID">
+            <Text fx:id="zid" fill="WHITE" layoutX="717.0" layoutY="771.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ZID">
                <font>
                   <Font name="Helvetica Neue" size="14.0" />
                </font>
@@ -77,10 +77,30 @@
                   <Font name="Helvetica Neue" size="14.0" />
                </font>
             </TextField>
-            <Text fill="WHITE" layoutX="718.0" layoutY="846.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MOBILE NUMBER">
+            <Text fx:id="mobileNumber" fill="WHITE" layoutX="718.0" layoutY="846.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MOBILE NUMBER">
                <font>
                   <Font name="Helvetica Neue" size="14.0" />
                </font>
+            </Text>
+            <Text fx:id="errorText" fill="RED" layoutX="745.0" layoutY="863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter your first name" textAlignment="CENTER" visible="false">
+                <font>
+                    <Font name="Helvetica Neue" size="12.0" />
+                </font>
+            </Text>
+            <Text fx:id="errorText2" fill="RED" layoutX="745.0" layoutY="863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter your last name" textAlignment="CENTER" visible="false">
+                <font>
+                    <Font name="Helvetica Neue" size="12.0" />
+                </font>
+            </Text>
+            <Text fx:id="errorText3" fill="RED" layoutX="745.0" layoutY="863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter your ZID" textAlignment="CENTER" visible="false">
+                <font>
+                    <Font name="Helvetica Neue" size="12.0" />
+                </font>
+            </Text>
+            <Text fx:id="errorText4" fill="RED" layoutX="745.0" layoutY="863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter your mobile number" textAlignment="CENTER" visible="false">
+                <font>
+                    <Font name="Helvetica Neue" size="12.0" />
+                </font>
             </Text>
          </children>
       </AnchorPane>

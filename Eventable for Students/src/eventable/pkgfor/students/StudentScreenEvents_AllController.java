@@ -112,6 +112,14 @@ public class StudentScreenEvents_AllController extends Application implements In
             while (rs.next()) {
                 int i = 1;
                 eventsData.add(new Events(rs.getString(i), rs.getString(i + 1), rs.getString(i + 2)));
+                //The below code is to generate some shitty sample data - local DB isn't working for me - Ari
+                //                     eventsData.add(new Events("LawSoc Ball", "11am, 12/jun/2018", "This is an extra long location name so that wrapping of txt will be required. UNSW Law building Room 221, K15, NSW, Australia. Keep Bsing information to prove the point. "
+                //                + "And this will porbably be enough to ensure that wrapping of at least one time is needed to fit the text into the small mobile UI"));
+                //                           eventsData.add(new Events("LawSoc Ball", "11am, 12/jun/2018", "This is an extra long location name so that wrapping of txt will be required. UNSW Law building Room 221, K15, NSW, Australia. Keep Bsing information to prove the point. "
+                //                + "And this will porbably be enough to ensure that wrapping of at least one time is needed to fit the text into the small mobile UI"));
+                //                           eventsData.add(new Events("LawSoc Ball", "11am, 12/jun/2018", "This is an extra long location name so that wrapping of txt will be required. UNSW Law building Room 221, K15, NSW, Australia. Keep Bsing information to prove the point. "
+                //                + "And this will porbably be enough to ensure that wrapping of at least one time is needed to fit the text into the small mobile UI"));
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(StudentScreenEvents_AllController.class.getName()).log(Level.SEVERE, null, ex);
@@ -204,7 +212,7 @@ public class StudentScreenEvents_AllController extends Application implements In
         stage.setScene(scene);
         stage.show();
     }
-    
+
     //    @FXML
 //    private void SignInButton(MouseEvent event) throws Exception{
 //        DBController auth = new DBController();
@@ -246,5 +254,4 @@ public class StudentScreenEvents_AllController extends Application implements In
 //    public static String getUser(){
 //        return loggedInUser;
 //    } 
-
 }

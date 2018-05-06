@@ -72,6 +72,51 @@
                   <Font name="Helvetica Neue" size="14.0" />
                </font>
             </Text>
+            <Text fx:id="errorText" fill="RED" layoutX="745.0" layoutY="863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter an email address" textAlignment="CENTER" visible="false">
+                <font>
+                    <Font name="Helvetica Neue" size="12.0" />
+                </font>
+            </Text>
+            <Text fx:id="errorText2" fill="RED" layoutX="745.0" layoutY="863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter a password" textAlignment="CENTER" visible="false">
+                <font>
+                    <Font name="Helvetica Neue" size="12.0" />
+                </font>
+            </Text>
+            <Text fx:id="errorText3" fill="RED" layoutX="745.0" layoutY="863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please confirm password" textAlignment="CENTER" visible="false">
+                <font>
+                    <Font name="Helvetica Neue" size="12.0" />
+                </font>
+            </Text>
+            <Text fx:id="errorText4" fill="RED" layoutX="745.0" layoutY="863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Passwords entered don't match" textAlignment="CENTER" visible="false">
+                <font>
+                    <Font name="Helvetica Neue" size="12.0" />
+                </font>
+            </Text>
+            <Text fx:id="errorText5" fill="RED" layoutX="745.0" layoutY="863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password must be minimum 8 characters long" textAlignment="CENTER" visible="false">
+                <font>
+                    <Font name="Helvetica Neue" size="12.0" />
+                </font>
+            </Text>
+            <Text fx:id="errorText6" fill="RED" layoutX="745.0" layoutY="863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password must contain a minimum of 1 lowercase character" textAlignment="CENTER" visible="false">
+                <font>
+                    <Font name="Helvetica Neue" size="12.0" />
+                </font>
+            </Text>
+            <Text fx:id="errorText7" fill="RED" layoutX="745.0" layoutY="863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password must contain a minimum of 1 uppercase character" textAlignment="CENTER" visible="false">
+                <font>
+                    <Font name="Helvetica Neue" size="12.0" />
+                </font>
+            </Text>
+            <Text fx:id="errorText8" fill="RED" layoutX="745.0" layoutY="863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password must contain a minimum of 1 digit" textAlignment="CENTER" visible="false">
+                <font>
+                    <Font name="Helvetica Neue" size="12.0" />
+                </font>
+            </Text>
+            <Text fx:id="errorText9" fill="RED" layoutX="745.0" layoutY="863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password must contain a minimum of 1 special character " textAlignment="CENTER" visible="false">
+                <font>
+                    <Font name="Helvetica Neue" size="12.0" />
+                </font>
+            </Text>
          </children>
       </AnchorPane>
    </children>
