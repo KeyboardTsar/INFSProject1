@@ -9,40 +9,43 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DBController {
-    
+
     public static Connection conn;
     protected String currentQuery;
     public static Statement statement;
-      
+
     //Open database connection
-   public static Statement openConnection() {
+    public static Statement openConnection() {
         if (conn == null) {
             try {
                 Class.forName("oracle.jdbc.driver.OracleDriver");
-            }
-                catch (ClassNotFoundException ex) {
+            } catch (ClassNotFoundException ex) {
                 Logger.getLogger(DBController.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
-                conn = DriverManager.getConnection("jdbc:oracle:thin:@sage.business.unsw.edu.au:1521:orcl01","Y17GROUP214","zanyheart47");
+                conn = DriverManager.getConnection("jdbc:oracle:thin:@sage.business.unsw.edu.au:1521:orcl01", "Y17GROUP214", "zanyheart47");
                 statement = conn.createStatement();
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            } 
+            }
         }
         return statement;
     }
 
     //Close database connection
     public static void closeConnection(Connection conn, ResultSet rs, Statement statement) {
-    try {
-        rs.close();
-        statement.close();
-        conn.close();
-    }
-     catch (Exception ex) {
-        ex.printStackTrace();
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -67,7 +70,7 @@ public class DBController {
         }
     }*/
 
-    /*public String returnName(int userID){
+ /*public String returnName(int userID){
         java.sql.Statement statement = null;
         currentQuery = "SELECT FIRST_NAME || " " || LAST_NAME FROM APP_USER WHERE ID = " + Integer.toString(userID);
         openConnection();
@@ -90,7 +93,6 @@ public class DBController {
             return "ERROR";
         }
     }*/
-    
     //check special characters
     /*public boolean sanitise(String username, String password){
         Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);

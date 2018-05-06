@@ -58,21 +58,21 @@ public class StudentScreenEvents_AllController extends Application implements In
     @FXML
     private Text society;
     @FXML
-    private Text code;
+    public Text code;
     @FXML
-    private Text events;
+    public Text events;
     @FXML
-    private Text feedback;
+    public Text feedback;
     @FXML
-    private Text profile;
+    public Text profile;
     @FXML
-    private Text all;
+    public Text all;
     @FXML
-    private Text favourites;
+    public Text favourites;
     @FXML
-    private Text going;
+    public Text going;
     @FXML
-    private Text past;
+    public Text past;
     @FXML
     public TableView<Events> tableofEvents;
     @FXML
