@@ -217,7 +217,7 @@ public class StudentScreenEvents_AllController extends Application implements In
     }
 
     @FXML
-    private void topNavPast(ActionEvent event) throws SQLException {
+    private void topNavPast(MouseEvent event) throws SQLException {
         loadNext("StudentScreenEvents_Past.fxml");
     }
 
