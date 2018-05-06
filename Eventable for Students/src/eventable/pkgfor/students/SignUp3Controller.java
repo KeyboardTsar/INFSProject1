@@ -52,6 +52,8 @@ public class SignUp3Controller extends Application implements Initializable {
     private Button next;
     public TextField degree, graduationYear;
     public Text errorText;
+    @FXML
+    private ImageView backButton;
     
     public static Connection conn;
 
@@ -85,9 +87,13 @@ public class SignUp3Controller extends Application implements Initializable {
     private void nextButton(ActionEvent event) throws Exception{
         if (validateFields()) {
             System.out.print("Entered nextButton method");
-            closeConnection(conn, rs, statement);
+//            closeConnection(conn, rs, statement);
             loadNext("SignUp4.fxml");
         }
+    }
+    @FXML
+    private void backButtonPressed (MouseEvent event) {
+        loadNext("SignUp2.fxml");
     }
     
     public void loadNext(String destination){

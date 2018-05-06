@@ -50,6 +50,8 @@ public class SignUp1Controller extends Application implements Initializable {
     public TextField password, confirmPassword;
     public TextField email;
     public Text errorText;
+    @FXML
+    private ImageView backButton;
 
     char ch;
 
@@ -104,9 +106,14 @@ public class SignUp1Controller extends Application implements Initializable {
     @FXML
     private void nextButton(ActionEvent event) throws SQLException {
         if (validateRegistration()) {
-            closeConnection(conn, rs, statement);
+//            closeConnection(conn, rs, statement);
             loadNext("SignUp2.fxml");
         }
+    }
+    
+    @FXML
+    private void backButtonPressed (MouseEvent event) throws SQLException {
+        loadNext("Home.fxml");
     }
 
     public void loadNext(String destination) {

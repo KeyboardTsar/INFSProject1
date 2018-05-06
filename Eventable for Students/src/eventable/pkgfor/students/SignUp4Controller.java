@@ -51,6 +51,8 @@ public class SignUp4Controller implements Initializable {
 
     @FXML
     private Button next;
+    @FXML
+    private ImageView backButton;
     
     public static Connection conn;
 
@@ -116,6 +118,10 @@ public class SignUp4Controller implements Initializable {
             loadNext("StudentScreenEvents_All.fxml");
         }
         
+    }
+    @FXML
+    private void backButtonPressed (MouseEvent event) {
+        loadNext("SignUp3.fxml");
     }
 
     public void loadNext(String destination) {

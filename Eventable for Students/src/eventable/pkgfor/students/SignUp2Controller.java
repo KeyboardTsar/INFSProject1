@@ -54,6 +54,8 @@ public class SignUp2Controller extends Application implements Initializable {
     private Button next;
     public TextField firstName, lastName, zid, mobileNumber;
     public Text errorText;
+    @FXML
+    private ImageView backButton;
 
     public static Connection conn;
 
@@ -125,9 +127,13 @@ public class SignUp2Controller extends Application implements Initializable {
     private void nextButton(ActionEvent event) throws SQLException {
         if (validateFields()) {
             System.out.print("Entered nextButton method");
-            closeConnection(conn, rs, statement);
+//            closeConnection(conn, rs, statement);
             loadNext("SignUp3.fxml");
         }
+    }
+    @FXML
+    private void backButtonPressed (MouseEvent event) {
+        loadNext("SignUp1.fxml");
     }
 
     public void loadNext(String destination) {

@@ -51,6 +51,8 @@ public class LoginController implements Initializable {
 
     @FXML
     private Button loginButton;
+    @FXML
+    private ImageView backButton;
     
     @FXML
     private TextField email, password;
@@ -140,6 +142,12 @@ public class LoginController implements Initializable {
                 //loadNext("SignUp1.fxml");
             }
         }
+    
+    @FXML
+    private void backButtonPressed (MouseEvent event) throws SQLException {
+        loadNext("Home.fxml");
+    }
+
     
     private void forgotPassword(MouseEvent event) {
         loadNext("ForgotPassword1.fxml");

@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eventable.pkgfor.students.LoginController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eventable.pkgfor.students.LoginController">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
@@ -72,6 +72,11 @@
                   <Font name="Helvetica Neue" size="12.0" />
                </font>
             </Text>
+            <ImageView fx:id="backButton" fitHeight="30.0" fitWidth="30.0" layoutX="709.0" layoutY="431.0" onMouseClicked="#backButtonPressed" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@backIcon1.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>
