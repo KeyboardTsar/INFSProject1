@@ -13,10 +13,10 @@ import javafx.scene.control.TextField;
  */
 public class Utils {
     public static String extractString(TextField field){
-        return field.toString().trim();
+        return field.getText().trim();
     }
     
     public static boolean extractStringIsEmpty(TextField field){
-        return field.toString().trim().isEmpty();
+        return extractString(field).isEmpty();
     }
 }
