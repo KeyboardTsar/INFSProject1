@@ -61,6 +61,10 @@ public class SignUp4Controller implements Initializable {
     public static Connection conn;
 
     public String currentQuery;
+    public String currentQuery1;
+    
+    public String securityQuestion1Wording;
+    public String securityQuestion2Wording;
 
     public static ResultSet rs;
 
@@ -96,6 +100,7 @@ public class SignUp4Controller implements Initializable {
         securityQuestion1.setConverter(new StringConverter<SecurityQuestion>(){
             @Override
             public String toString(SecurityQuestion object) {
+                securityQuestion1Wording = object.getSecurityQuestionWording();
                 return object.getSecurityQuestionWording();
             }
 
@@ -107,6 +112,7 @@ public class SignUp4Controller implements Initializable {
         securityQuestion2.setConverter(new StringConverter<SecurityQuestion>(){
             @Override
             public String toString(SecurityQuestion object) {
+                securityQuestion2Wording = object.getSecurityQuestionWording();
                 return object.getSecurityQuestionWording();
             }
 
@@ -145,15 +151,21 @@ public class SignUp4Controller implements Initializable {
             return false;
         }
         //TODO: Need to fix the below check...
-        if (Utils.extractString(securityQuestion1).equals(Utils.extractString(securityQuestion2))) {
+        if (securityQuestion1Wording.equals(securityQuestion2Wording)) {
             setError("Please answer 2 unique security questions");
             return false;
         }
+        
         //Adding security questions for user
+        //TODO: NEED TO FINISH - NOTE: securityQuestion1.getId() does not work for this scenario
 //        statement = openConnection();
-//        currentQuery = "UPDATE SECURITY_FEATURE SET  = '" + degree.getText() + "', " + "graduation_year = '" + graduationYear.getText() + "'";
+//        currentQuery = "INSERT INTO SECURITY_FEATURE (securityquestion_id, email, security_answer) VALUES ('" + securityQuestion1.getId() + "', '" + 
+//                SignUp1Controller.userEmailAddress + "', '" + Utils.extractString(securityAnswer1) + "')";
 //        System.out.print(currentQuery);
+//        currentQuery1 = "INSERT INTO SECURITY_FEATURE (securityquestion_id, email, security_answer) VALUES ('" + securityQuestion2.getId() + 1 + "', '" + 
+//                SignUp1Controller.userEmailAddress + "', '" + Utils.extractString(securityAnswer2) + "')";
 //        int update = statement.executeUpdate(currentQuery);
+//        int update1 = statement.executeUpdate(currentQuery1);
         return true;
     }
 
@@ -161,6 +173,7 @@ public class SignUp4Controller implements Initializable {
     private void nextButton(ActionEvent event) throws Exception {
         if (validateFields()) {
             System.out.print("Entered nextButton method");
+            LoginController.loggedInUser = SignUp1Controller.userEmailAddress;
 //            closeConnection(conn, rs, statement);
             loadNext("StudentScreenEvents_All.fxml");
         }
