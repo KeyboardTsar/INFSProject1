@@ -5,6 +5,7 @@
  */
 package eventable.pkgfor.students;
 
+import static eventable.pkgfor.students.DBController.openConnection;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -14,6 +15,8 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +34,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 
 /**
  *
@@ -51,9 +55,9 @@ public class SignUp4Controller implements Initializable {
 
     @FXML
     private Button next;
-    @FXML
-    private ImageView backButton;
-    
+
+    private ObservableList<SecurityQuestion> securityQuestionData;
+
     public static Connection conn;
 
     public String currentQuery;
@@ -64,28 +68,66 @@ public class SignUp4Controller implements Initializable {
 
     public String userPassword;
 
-//    @FXML 
-//    private ImageView home;
-//    
-//    @FXML
-//    private TextField username;
-//    
-//    @FXML
-//    private PasswordField password;
-//    
-//    @FXML
-//    private Text SignInError, InjectionError;
-//    
-//    public static String loggedInUser;
-//
-//    DBController d = new DBController(); //Establish a connection to the db
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        try {
+            populatingComboBox();
+        } catch (SQLException ex) {
+            Logger.getLogger(SignUp4Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
-    public boolean validateFields() throws SQLException {
+
+    public void populatingComboBox() throws SQLException {
+        statement = openConnection();
+        currentQuery = "SELECT securityquestion_wording from security_question";
+        ResultSet rs = statement.executeQuery(currentQuery);
+
+        securityQuestionData = FXCollections.observableArrayList();
+        try {
+            while (rs.next()) {
+                int i = 1;
+                securityQuestionData.add(new SecurityQuestion(rs.getString(i)));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentScreenEvents_AllController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+        //Format the strings in the ComboBox
+        securityQuestion1.setConverter(new StringConverter<SecurityQuestion>(){
+            @Override
+            public String toString(SecurityQuestion object) {
+                return object.getSecurityQuestionWording();
+            }
+
+            @Override
+            public SecurityQuestion fromString(String string) {
+                return null;
+            }
+        });
+        securityQuestion2.setConverter(new StringConverter<SecurityQuestion>(){
+            @Override
+            public String toString(SecurityQuestion object) {
+                return object.getSecurityQuestionWording();
+            }
+
+            @Override
+            public SecurityQuestion fromString(String string) {
+                return null;
+            }
+        });
+        
+        //Data added to comboBox
+        try {
+            securityQuestion1.setItems(securityQuestionData);
+            securityQuestion2.setItems(securityQuestionData);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } //finally {
+        //closeConnection(conn, rs, statement);
+        //}
+    }
+
+    public boolean validateFields() throws SQLException {
         if (Utils.extractStringIsEmpty(securityQuestion1)) {
             setError("Please select a security question");
             return false;
@@ -102,9 +144,9 @@ public class SignUp4Controller implements Initializable {
             setError("Please answer your security questions");
             return false;
         }
-        //TODO: Fix this DB Code
+        //Adding security questions for user
 //        statement = openConnection();
-//        currentQuery = "UPDATE(email, password) SET degree = '" + degree.getText() + "', " + "SET graduation_year = '" + graduationYear.getText() + "'";
+//        currentQuery = "UPDATE(email, password) SET degree = '" + degree.getText() + "', " + "graduation_year = '" + graduationYear.getText() + "'";
 //        System.out.print(currentQuery);
 //        int update = statement.executeUpdate(currentQuery);
         return true;
@@ -112,16 +154,12 @@ public class SignUp4Controller implements Initializable {
 
     @FXML
     private void nextButton(ActionEvent event) throws Exception {
-        if(validateFields()) {
+        if (validateFields()) {
             System.out.print("Entered nextButton method");
 //            closeConnection(conn, rs, statement);
             loadNext("StudentScreenEvents_All.fxml");
         }
-        
-    }
-    @FXML
-    private void backButtonPressed (MouseEvent event) {
-        loadNext("SignUp3.fxml");
+
     }
 
     public void loadNext(String destination) {
@@ -135,7 +173,7 @@ public class SignUp4Controller implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    
+
     public void setError(String errorMessage) {
         errorText.setText(errorMessage);
         errorText.setVisible(true);

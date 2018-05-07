@@ -73,18 +73,13 @@
                   <Font name="Helvetica Neue" size="14.0" />
                </font>
             </Text>
-            <ComboBox fx:id="securityQuestion1" layoutX="717.0" layoutY="621.0" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: black; -fx-opacity: 0.5; -fx-border-color: white;" />
-            <ComboBox fx:id="securityQuestion2" layoutX="717.0" layoutY="773.0" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: black; -fx-opacity: 0.5; -fx-border-color: white;" />
+            <ComboBox fx:id="securityQuestion1" layoutX="717.0" layoutY="621.0" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: black; -fx-opacity: 0.5; -fx-border-color: white;" visibleRowCount="8" />
+            <ComboBox fx:id="securityQuestion2" layoutX="717.0" layoutY="773.0" prefHeight="36.0" prefWidth="260.0" style="-fx-background-color: black; -fx-opacity: 0.5; -fx-border-color: white;" visibleRowCount="8" />
             <Text fx:id="errorText" fill="WHITE" layoutX="732.0" layoutY="910.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="235.0">
                <font>
                   <Font name="Helvetica Neue" size="14.0" />
                </font>
             </Text>
-            <ImageView fx:id="backButton" fitHeight="30.0" fitWidth="30.0" layoutX="705.0" layoutY="417.0" onMouseClicked="#backButtonPressed" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@backIcon1.png" />
-               </image>
-            </ImageView>
          </children>
       </AnchorPane>
    </children>
