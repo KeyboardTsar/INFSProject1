@@ -90,9 +90,9 @@ public class ForgetPassword2Controller extends Application implements Initializa
         //Security Answer
         currentQuery1 = "SELECT security_answer FROM security_feature JOIN security_question USING(securityquestion_id) WHERE email = '" + ForgetPassword1Controller.emailAddress + "'" + " AND securityquestion_wording = '" + securityQuestionString + "'";
         ResultSet rs1 = statement.executeQuery(currentQuery1);
-        String securityAnswer = answer.getText();
+        String securityAnswer = answer.getText().trim().toLowerCase();
         while (rs1.next()) {
-        if (securityAnswer.matches(rs1.getString(1))) {
+        if (securityAnswer.matches(rs1.getString(1).toLowerCase())) {
             return true;
         }
         else {

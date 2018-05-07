@@ -63,7 +63,7 @@ public class ForgetPassword1Controller extends Application implements Initializa
 
     @FXML
     public Boolean validateData() throws SQLException, NullPointerException {
-        emailAddress = email.getText();
+        emailAddress = email.getText().trim().toLowerCase();
         errorText.setVisible(false);
         errorText2.setVisible(false);
         //Check if field is empty
@@ -73,7 +73,7 @@ public class ForgetPassword1Controller extends Application implements Initializa
         } else {
             //Check if email address exists in database
             statement = openConnection();
-            currentQuery = "SELECT email from app_user WHERE email = '" + emailAddress + "'";
+            currentQuery = "SELECT email from app_user WHERE email = lower('" + emailAddress + "')";
             ResultSet rs = statement.executeQuery(currentQuery);
             if (rs.next() == false) {
                 errorText2.setVisible(true);
@@ -82,7 +82,7 @@ public class ForgetPassword1Controller extends Application implements Initializa
             while (rs.next()) {
                 System.out.println("email address is " + emailAddress);
                 System.out.println("result set is " + rs.getString(1));
-                if (emailAddress.matches(rs.getString(1))) {
+                if (emailAddress.matches(rs.getString(1).toLowerCase())) {
                 } else {
                     errorText2.setVisible(true);
                     return false;
