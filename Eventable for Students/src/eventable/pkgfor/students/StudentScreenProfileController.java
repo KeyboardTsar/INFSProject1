@@ -5,11 +5,18 @@
  */
 package eventable.pkgfor.students;
 
+import static eventable.pkgfor.students.DBController.openConnection;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,19 +28,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author AriSurfacePro
- */
-public class StudentScreenProfileController implements Initializable {
+public class StudentScreenProfileController extends Application implements Initializable {
 
     @FXML
     Stage stage;
     Parent root;
 
     @FXML
-    private Text society;
+    public Text society;
     @FXML
     private Text code;
     @FXML
@@ -43,32 +45,43 @@ public class StudentScreenProfileController implements Initializable {
     @FXML
     private Text profile;
     @FXML
-    private Button editAccountButton;
+    public Button editAccountButton;
     @FXML
-    private Button deleteAccountButton;
+    public Button deleteAccountButton;
     @FXML
-    private TextField firstName;
+    public TextField firstName;
     @FXML
-    private TextField lastName;
+    public TextField lastName;
     @FXML
-    private TextField email;
+    public TextField email;
     @FXML
-    private TextField password;
+    public TextField zID;
     @FXML
-    private TextField zID;
+    public TextField mobile;
     @FXML
-    private TextField mobile;
+    public TextField degree;
     @FXML
-    private TextField degree;
-    @FXML
-    private TextField gradYear;
+    public TextField gradYear;
+    
+    public static Connection conn;
+    
+    public String currentQuery;
+    
+    public String currentQuery1;
+    
+    public static ResultSet rs;
+    
+    public static int rs1;
+    
+    public static Statement statement;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        try {
+            displayUserData();
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentScreenProfileController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -96,13 +109,36 @@ public class StudentScreenProfileController implements Initializable {
         loadNext("StudentScreenProfile.fxml");
     }
 
+    private void displayUserData () throws SQLException {
+        statement = openConnection();
+        currentQuery = "SELECT email, zid, mobile_number, first_name, last_name, degree, graduation_year FROM app_user WHERE email = '" + LoginController.loggedInUser + "'";
+        ResultSet rs = statement.executeQuery(currentQuery);
+        while(rs.next()) {
+            email.setText(rs.getString("email"));
+           // password.setText(rs.getString("password"));
+            zID.setText(rs.getString("zid"));
+            mobile.setText(rs.getString("mobile_number"));
+            firstName.setText(rs.getString("first_name"));
+            lastName.setText(rs.getString("last_name"));
+            degree.setText(rs.getString("degree"));
+            gradYear.setText(rs.getString("graduation_year"));
+        }
+    }
+    
+    @FXML
+    private void updateAccount (MouseEvent event) throws SQLException {
+        currentQuery1 = "UPDATE app_user SET email = '" +  email.getText() + "', " + "zid = '" + zID.getText() + "', " + "mobile_number = '" + mobile.getText() + "', " + "first_name = '" + firstName.getText() + "', " + "last_name = '" + lastName.getText() + "', " + "degree = '" + degree.getText() + "', " + " graduation_year = '" + gradYear.getText() + "'" + " WHERE email = '" + LoginController.loggedInUser + "'";
+        System.out.println(currentQuery1);
+        int rs1 = statement.executeUpdate(currentQuery1);
+    }
+       
     @FXML
     private void enableEditAccount(MouseEvent event) {
         if (!firstName.isEditable()) {
             firstName.setEditable(true);
             lastName.setEditable(true);
             email.setEditable(true);
-            password.setEditable(true);
+            //password.setEditable(true).;
             zID.setEditable(true);
             mobile.setEditable(true);
             degree.setEditable(true);
@@ -110,13 +146,10 @@ public class StudentScreenProfileController implements Initializable {
             editAccountButton.setText("Save");
         } 
         else {
-            //TODO: Save modified profile information to DB
-
-            //Set TextFields back to read-only and change button text
             firstName.setEditable(false);
             lastName.setEditable(false);
             email.setEditable(false);
-            password.setEditable(false);
+            //password.setEditable(false);
             zID.setEditable(false);
             mobile.setEditable(false);
             degree.setEditable(false);
@@ -125,14 +158,14 @@ public class StudentScreenProfileController implements Initializable {
         } 
     }
 
-    @FXML
+    @FXML //NEED TO COMPLETE
     private void deleteAccount(MouseEvent event) {
     }
-
+    
     public void loadNext(String destination) {
         stage = (Stage) society.getScene().getWindow();
         try {
-            root = FXMLLoader.load(getClass().getResource(destination)); //putting it to 'Seek a Ride' for now, before we know what type of user each person is
+            root = FXMLLoader.load(getClass().getResource(destination));
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -140,6 +173,15 @@ public class StudentScreenProfileController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        stage = (Stage) society.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+}
 
 //    @FXML
 //    private void SignInButton(ActionEvent event) throws Exception{
@@ -182,4 +224,3 @@ public class StudentScreenProfileController implements Initializable {
 //    public static String getUser(){
 //        return loggedInUser;
 //    } 
-}

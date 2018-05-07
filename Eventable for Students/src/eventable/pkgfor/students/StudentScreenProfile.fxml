@@ -33,61 +33,50 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="518.0" prefWidth="338.0">
                <children>
-                  <Text layoutX="27.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name">
+                  <Text layoutX="27.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <Text layoutX="20.0" layoutY="436.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Note to Ari, Ajay, Ed: On click of 'Edit Account', just make the text fields editable, and change the text of 'Edit Account' to 'Save Changes'" wrappingWidth="298.7568359375">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Text>
-                  <Button fx:id="editAccountButton" layoutX="28.0" layoutY="21.0" mnemonicParsing="false" onMouseClicked="#enableEditAccount" prefHeight="27.0" prefWidth="119.0" text="Edit Account" />
-                  <Button fx:id="deleteAccountButton" layoutX="181.0" layoutY="21.0" mnemonicParsing="false" onMouseClicked="#deleteAccount" prefHeight="27.0" prefWidth="120.0" text="Delete Account" />
-                  <TextField fx:id="firstName" editable="false" layoutX="122.0" layoutY="72.0" prefHeight="27.0" prefWidth="179.0" />
-                  <Text layoutX="27.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name">
+                  <Button fx:id="editAccountButton" layoutX="196.0" layoutY="432.0" mnemonicParsing="false" onMouseClicked="#updateAccount" onMouseEntered="#enableEditAccount" prefHeight="27.0" prefWidth="119.0" text="Edit Account" />
+                  <Button fx:id="deleteAccountButton" layoutX="19.0" layoutY="431.0" mnemonicParsing="false" onMouseClicked="#deleteAccount" prefHeight="27.0" prefWidth="120.0" text="Delete Account" />
+                  <TextField fx:id="firstName" editable="false" layoutX="122.0" layoutY="54.0" prefHeight="27.0" prefWidth="179.0" />
+                  <Text layoutX="27.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="lastName" editable="false" layoutX="122.0" layoutY="109.0" prefHeight="27.0" prefWidth="179.0" />
+                  <TextField fx:id="lastName" editable="false" layoutX="122.0" layoutY="103.0" prefHeight="27.0" prefWidth="179.0" />
                   <Text layoutX="67.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="email" editable="false" layoutX="122.0" layoutY="153.0" prefHeight="27.0" prefWidth="179.0" />
-                  <Text layoutX="35.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+                  <TextField fx:id="email" editable="false" layoutX="122.0" layoutY="151.0" prefHeight="27.0" prefWidth="179.0" />
+                  <Text layoutX="82.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="zID">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="password" editable="false" layoutX="122.0" layoutY="190.0" prefHeight="27.0" prefWidth="179.0" />
-                  <Text layoutX="66.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="zID">
+                  <TextField fx:id="zID" editable="false" layoutX="122.0" layoutY="203.0" prefHeight="27.0" prefWidth="179.0" />
+                  <Text layoutX="53.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mobile">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="zID" editable="false" layoutX="121.0" layoutY="227.0" prefHeight="27.0" prefWidth="179.0" />
-                  <Text layoutX="53.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mobile">
+                  <TextField fx:id="mobile" editable="false" layoutX="122.0" layoutY="249.0" prefHeight="27.0" prefWidth="179.0" />
+                  <Text layoutX="53.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Degree">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="mobile" editable="false" layoutX="119.0" layoutY="268.0" prefHeight="27.0" prefWidth="179.0" />
-                  <Text layoutX="53.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Degree">
+                  <TextField fx:id="degree" editable="false" layoutX="122.0" layoutY="296.0" prefHeight="29.0" prefWidth="179.0" />
+                  <Text layoutX="19.0" layoutY="359.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Graduation Year" textAlignment="RIGHT" wrappingWidth="93.484375">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="degree" editable="false" layoutX="119.0" layoutY="308.0" prefHeight="29.0" prefWidth="179.0" />
-                  <Text layoutX="19.0" layoutY="361.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Graduation Year" textAlignment="RIGHT" wrappingWidth="93.484375">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="gradYear" editable="false" layoutX="119.0" layoutY="347.0" prefHeight="27.0" prefWidth="80.0" />
+                  <TextField fx:id="gradYear" editable="false" layoutX="122.0" layoutY="345.0" prefHeight="27.0" prefWidth="80.0" />
                </children>
             </AnchorPane>
         </content>

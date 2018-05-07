@@ -53,7 +53,7 @@
                   <Font name="Helvetica Neue" size="14.0" />
                </font>
             </Text>
-            <Text fx:id="forgotPassword" fill="WHITE" layoutX="789.0" layoutY="940.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FORGOT PASSWORD?" underline="true">
+            <Text fx:id="forgotPassword" fill="WHITE" layoutX="789.0" layoutY="940.0" onMouseClicked="#forgotPassword" strokeType="OUTSIDE" strokeWidth="0.0" text="FORGOT PASSWORD?" underline="true">
                <font>
                   <Font name="Helvetica Neue" size="12.0" />
                </font>
@@ -63,7 +63,7 @@
                   <Font name="Helvetica Neue" size="12.0" />
                </font>
             </Text>
-            <Text fx:id="errorText2" fill="RED" layoutX="745.0" layoutY="863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect Username/Password" textAlignment="CENTER" visible="false">
+            <Text fx:id="errorText2" fill="RED" layoutX="745.0" layoutY="863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Incorrect Username/Password" textAlignment="CENTER" visible="false" wrappingWidth="204.4921875">
                <font>
                   <Font name="Helvetica Neue" size="12.0" />
                </font>

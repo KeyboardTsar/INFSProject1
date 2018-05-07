@@ -82,7 +82,7 @@ public class LoginController implements Initializable {
     public boolean authenticate() throws ClassNotFoundException, SQLException{
         //Get email and password from fields
         statement = openConnection();
-        loggedInUser = email.getText();
+        loggedInUser = email.getText().trim().toLowerCase();
         int loggedInPasswordHashed = password.getText().hashCode();
         String loggedInPasswordHashedString = loggedInPasswordHashed + "";
    
@@ -91,7 +91,7 @@ public class LoginController implements Initializable {
             errorText.setVisible(true);
         }
         else {
-        currentQuery = "SELECT PASSWORD FROM APP_USER WHERE EMAIL = '" + loggedInUser + "'";
+        currentQuery = "SELECT PASSWORD FROM APP_USER WHERE EMAIL = lower('" + loggedInUser + "')";
         String passwordStoredInDB = null;
         int passwordStoredInDBHashed;
         String passwordStoredInDBHashedString = null; //as passwords stored in DB are currently not hashed 
@@ -101,8 +101,8 @@ public class LoginController implements Initializable {
             ResultSet rs = statement.executeQuery(currentQuery);
             while (rs.next()) {
                     passwordStoredInDB = rs.getString("PASSWORD");
-                    passwordStoredInDBHashed = passwordStoredInDB.hashCode();
-                    passwordStoredInDBHashedString = passwordStoredInDBHashed + "";
+//                    passwordStoredInDBHashed = passwordStoredInDB.hashCode();
+//                    passwordStoredInDBHashedString = passwordStoredInDBHashed + "";
             }
             }
                     catch (NullPointerException e) {
@@ -111,7 +111,7 @@ public class LoginController implements Initializable {
                 }
 
                 //Comparing passwords
-                if (loggedInPasswordHashedString.matches(passwordStoredInDBHashedString)) {
+                if (loggedInPasswordHashedString.matches(passwordStoredInDB)) {
                     System.out.print("Password correct");
                     return true;
                 } else {
@@ -150,9 +150,9 @@ public class LoginController implements Initializable {
         loadNext("Home.fxml");
     }
 
-    
+    @FXML
     private void forgotPassword(MouseEvent event) {
-        loadNext("ForgotPassword1.fxml");
+        loadNext("ForgetPassword1.fxml");
     }
     
     public void loadNext(String destination) {
