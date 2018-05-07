@@ -144,9 +144,14 @@ public class SignUp4Controller implements Initializable {
             setError("Please answer your security questions");
             return false;
         }
+        //TODO: Need to fix the below check...
+        if (Utils.extractString(securityQuestion1).equals(Utils.extractString(securityQuestion2))) {
+            setError("Please answer 2 unique security questions");
+            return false;
+        }
         //Adding security questions for user
 //        statement = openConnection();
-//        currentQuery = "UPDATE(email, password) SET degree = '" + degree.getText() + "', " + "graduation_year = '" + graduationYear.getText() + "'";
+//        currentQuery = "UPDATE SECURITY_FEATURE SET  = '" + degree.getText() + "', " + "graduation_year = '" + graduationYear.getText() + "'";
 //        System.out.print(currentQuery);
 //        int update = statement.executeUpdate(currentQuery);
         return true;
