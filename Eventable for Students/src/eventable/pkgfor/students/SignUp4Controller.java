@@ -150,7 +150,6 @@ public class SignUp4Controller implements Initializable {
             setError("Please answer your security questions");
             return false;
         }
-        //TODO: Need to fix the below check...
         if (securityQuestion1Wording.equals(securityQuestion2Wording)) {
             setError("Please answer 2 unique security questions");
             return false;
